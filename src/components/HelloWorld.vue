@@ -1,7 +1,10 @@
 <script>
   export default {
     props: {
-      msg: String
+      msg: {
+        required: true,
+        type: String
+      }
     }
   }
 </script>
