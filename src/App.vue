@@ -1,13 +1,13 @@
 <script>
-  import Navbar from "./components/Navbar.vue"
+  import SideNavbar from "./components/SideNavbar.vue"
   export default {
-    components: { Navbar },
+    components: { SideNavbar },
   }
 </script>
 
 <template>
-  <Navbar />
-  <main class="scroll-smooth">
+  <SideNavbar />
+  <main class="ml-56 bg-gray-50 h-screen">
     <RouterView />
   </main>
 </template>
