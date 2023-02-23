@@ -1,5 +1,5 @@
 <script>
-  import SideNavbar from "./components/SideNavbar.vue"
+  import SideNavbar from './components/SideNavbar.vue'
   export default {
     components: { SideNavbar },
   }

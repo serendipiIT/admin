@@ -6,9 +6,9 @@
 </template>
 
 <script>
-  import EditProducts from "../components/EditProducts.vue"
+  import EditProducts from '../components/EditProducts.vue'
   export default {
-    name: "ProductsView",
+    name: 'ProductsView',
     components: {
       EditProducts,
     },

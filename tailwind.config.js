@@ -1,20 +1,20 @@
 /** @type {import('tailwindcss').Config} */
 
 // tailwind.config.js
-const colors = require("tailwindcss/colors")
+const colors = require('tailwindcss/colors')
 
 module.exports = {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx,vue}"],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx,vue}'],
   theme: {
     extend: {},
     variants: {
       extend: {
-        scale: ["focus-within"],
+        scale: ['focus-within'],
       },
     },
     colors: {
-      transparent: "transparent",
-      current: "currentColor",
+      transparent: 'transparent',
+      current: 'currentColor',
       black: colors.black,
       white: colors.white,
       gray: colors.trueGray,

@@ -6,7 +6,7 @@
 
 <script>
   export default {
-    name: "OrdersView",
+    name: 'OrdersView',
   }
 </script>
 

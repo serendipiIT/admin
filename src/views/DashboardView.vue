@@ -1,14 +1,16 @@
+<template>
+  <div>
+    <h1>Dashboard</h1>
+  </div>
+</template>
+
 <script>
   export default {
-    components: {},
+    name: 'DashboardView',
   }
 </script>
 
-<template>
-  <main>
-    <h1>Hello</h1>
-  </main>
-</template>
+<style lang="scss" scoped></style>
 
 <!--
 

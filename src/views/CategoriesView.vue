@@ -8,7 +8,7 @@
 
 <script>
   export default {
-    name: "CategoriesView",
+    name: 'CategoriesView',
   }
 </script>
 

@@ -1,57 +1,57 @@
-import { createRouter, createWebHashHistory } from "vue-router"
+import { createRouter, createWebHashHistory } from 'vue-router'
 
-import HomeView from "./views/HomeView.vue"
-import ProductsView from "./views/ProductsView.vue"
-import CategoriesView from "./views/CategoriesView.vue"
-import OrdersView from "./views/OrdersView.vue"
-import CustomersView from "./views/CustomersView.vue"
-import DesignView from "./views/DesignView.vue"
-import PagesView from "./views/PagesView.vue"
+import DashboardView from './views/DashboardView.vue'
+import ProductsView from './views/ProductsView.vue'
+import CategoriesView from './views/CategoriesView.vue'
+import OrdersView from './views/OrdersView.vue'
+import CustomersView from './views/CustomersView.vue'
+import DesignView from './views/DesignView.vue'
+import PagesView from './views/PagesView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      name: "home",
-      component: HomeView,
-      path: "/",
-      meta: { title: "Home" },
+      name: 'home',
+      component: DashboardView,
+      path: '/',
+      meta: { title: 'Home' },
     },
     {
-      name: "Products",
+      name: 'Products',
       component: ProductsView,
-      path: "/ProductsView",
-      meta: { title: "Products" },
+      path: '/ProductsView',
+      meta: { title: 'Products' },
     },
     {
-      name: "Categories",
+      name: 'Categories',
       component: CategoriesView,
-      path: "/CategoriesView",
-      meta: { title: "Categories" },
+      path: '/CategoriesView',
+      meta: { title: 'Categories' },
     },
     {
-      name: "Orders",
+      name: 'Orders',
       component: OrdersView,
-      path: "/OrdersView",
-      meta: { title: "Orders" },
+      path: '/OrdersView',
+      meta: { title: 'Orders' },
     },
     {
-      name: "Customers",
+      name: 'Customers',
       component: CustomersView,
-      path: "/CustomersView",
-      meta: { title: "Customers" },
+      path: '/CustomersView',
+      meta: { title: 'Customers' },
     },
     {
-      name: "Design",
+      name: 'Design',
       component: DesignView,
-      path: "/DesignView",
-      meta: { title: "Design" },
+      path: '/DesignView',
+      meta: { title: 'Design' },
     },
     {
-      name: "Pages",
+      name: 'Pages',
       component: PagesView,
-      path: "/PagesView",
-      meta: { title: "Pages" },
+      path: '/PagesView',
+      meta: { title: 'Pages' },
     },
   ],
 })
