@@ -1,7 +1,5 @@
 <template>
   <div>
-    <button @click="logStorage()">Logga storen</button>
-
     <table class="table table-auto w-full">
       <thead>
         <tr>
