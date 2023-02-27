@@ -63,6 +63,14 @@
           <div>Pages</div>
         </div>
       </routerLink>
+      <routerLink class="menyItems" :to="{ name: 'Icons' }">
+        <div>
+          <div>
+            <v-icon name="bi-lightning" fill="gray" scale="1.4" />
+          </div>
+          <div>Icons</div>
+        </div>
+      </routerLink>
     </div>
     <div>
       <div class="flex menyItems">
@@ -77,8 +85,8 @@
 
 <script>
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
-  import { BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart } from 'oh-vue-icons/icons'
-  addIcons(BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart)
+  import { BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart, BiLightning } from 'oh-vue-icons/icons'
+  addIcons(BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart, BiLightning)
 
   export default {
     name: 'SideNavbar',

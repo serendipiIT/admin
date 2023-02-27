@@ -16,13 +16,14 @@
       }
     },
     methods: {
-      getAxios() {
-        axios({
+      async getAxios() {
+        await axios({
           method: 'get',
           url: `${this.urlApi}products`,
         })
           .then((response) => {
             this.products = response.data.data
+            localStorage.setItem('products', JSON.stringify(response.data.data))
             console.log('get api results', response.data.data, 'requests ' + this.products[0].stock)
           })
           .catch((error) => {

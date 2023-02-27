@@ -7,6 +7,7 @@ import OrdersView from './views/OrdersView.vue'
 import CustomersView from './views/CustomersView.vue'
 import DesignView from './views/DesignView.vue'
 import PagesView from './views/PagesView.vue'
+import IconsView from './views/IconsView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -52,6 +53,12 @@ export default createRouter({
       component: PagesView,
       path: '/PagesView',
       meta: { title: 'Pages' },
+    },
+    {
+      name: 'Icons',
+      component: IconsView,
+      path: '/IconsView',
+      meta: { title: 'Icons' },
     },
   ],
 })

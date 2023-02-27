@@ -1,16 +1,19 @@
 <template>
   <div>
-    <h1>Products</h1>
-    <EditProducts />
+    <ProductOverview />
+    <UpdateServer />
   </div>
 </template>
 
 <script>
-  import EditProducts from '../components/EditProducts.vue'
+  import ProductOverview from '../components/ProductOverview.vue'
+  import UpdateServer from '../components/UpdateServer.vue'
+
   export default {
     name: 'ProductsView',
     components: {
-      EditProducts,
+      ProductOverview,
+      UpdateServer,
     },
   }
 </script>
