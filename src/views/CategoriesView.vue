@@ -1,9 +1,7 @@
 <template>
-  <main>
-    <div>
-      <h1>Categories</h1>
-    </div>
-  </main>
+  <div>
+    <h1>Categories</h1>
+  </div>
 </template>
 
 <script>

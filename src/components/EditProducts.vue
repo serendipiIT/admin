@@ -2,9 +2,6 @@
   import axios from 'axios'
 
   export default {
-    created() {
-      this.getAxios()
-    },
     data() {
       return {
         products: null,
@@ -25,14 +22,19 @@
           url: `${this.urlApi}products`,
         })
           .then((response) => {
-            console.log('get api results', response.data.data)
             this.products = response.data.data
+            console.log('get api results', response.data.data, 'requests ' + this.products[0].stock)
           })
           .catch((error) => {
             console.log(error)
           })
       },
       async postAxios() {
+        let changeImg = this.image
+        if (this.image === null) {
+          changeImg = '/assets/product-img/example.jpg'
+        }
+
         await axios({
           method: 'post',
           url: `${this.urlApi}products`,
@@ -41,7 +43,7 @@
             price: this.price,
             description: `"${this.description}"`,
             category: `"${this.category}"`,
-            image: `"${this.image}"`,
+            image: `"${changeImg}"`,
             stock: `"${this.stock}"`,
           },
         })
@@ -62,6 +64,8 @@
 
 <template>
   <h1>Products</h1>
+
+  <button @click="getAxios()">Get products</button>
 
   <h2>Add new product</h2>
 

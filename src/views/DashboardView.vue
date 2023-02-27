@@ -2,11 +2,15 @@
   <div>
     <h1>Dashboard</h1>
   </div>
+  <IconsComponent />
 </template>
 
 <script>
+  import IconsComponent from '../components/IconsComponent.vue'
+
   export default {
     name: 'DashboardView',
+    components: { IconsComponent },
   }
 </script>
 

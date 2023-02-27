@@ -10,7 +10,7 @@
       <routerLink class="menyItems" :to="{ name: 'home' }">
         <div>
           <div>
-            <v-icon name="md-dashboard" fill="gray" scale="1.4" />
+            <v-icon name="bi-columns-gap" fill="gray" scale="1.4" />
           </div>
           <div>Dashboard</div>
         </div>
@@ -18,15 +18,23 @@
       <routerLink class="menyItems" :to="{ name: 'Categories' }">
         <div>
           <div>
-            <v-icon name="md-librarybooks-outlined" fill="gray" scale="1.4" />
+            <v-icon name="bi-stickies" fill="gray" scale="1.4" />
           </div>
           <div>Categories</div>
+        </div>
+      </routerLink>
+      <routerLink class="menyItems" :to="{ name: 'Products' }">
+        <div>
+          <div>
+            <v-icon name="bi-postcard-heart" fill="gray" scale="1.4" />
+          </div>
+          <div>Products</div>
         </div>
       </routerLink>
       <routerLink class="menyItems" :to="{ name: 'Orders' }">
         <div>
           <div>
-            <v-icon name="bi-archive" fill="gray" hover scale="1.4" />
+            <v-icon name="bi-cart-check" fill="gray" hover scale="1.4" />
           </div>
           <div>Orders</div>
         </div>
@@ -34,7 +42,7 @@
       <routerLink class="menyItems" :to="{ name: 'Customers' }">
         <div>
           <div>
-            <v-icon name="md-groups-outlined" fill="gray" scale="1.4" />
+            <v-icon name="bi-people" fill="gray" scale="1.4" />
           </div>
           <div>Customers</div>
         </div>
@@ -42,7 +50,7 @@
       <routerLink class="menyItems" :to="{ name: 'Design' }">
         <div>
           <div>
-            <v-icon name="md-designservices-outlined" fill="gray" scale="1.4" />
+            <v-icon name="bi-palette" fill="gray" scale="1.4" />
           </div>
           <div>Design</div>
         </div>
@@ -50,7 +58,7 @@
       <routerLink class="menyItems" :to="{ name: 'Pages' }">
         <div>
           <div>
-            <v-icon name="md-web" fill="gray" scale="1.4" />
+            <v-icon name="bi-window-stack" fill="gray" scale="1.4" />
           </div>
           <div>Pages</div>
         </div>
@@ -69,8 +77,8 @@
 
 <script>
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
-  import { MdDashboard, MdLibrarybooksOutlined, BiArchive, MdGroupsOutlined, MdDesignservicesOutlined, MdWeb, BiBoxArrowLeft } from 'oh-vue-icons/icons'
-  addIcons(MdDashboard, MdLibrarybooksOutlined, BiArchive, MdGroupsOutlined, MdDesignservicesOutlined, MdWeb, BiBoxArrowLeft)
+  import { BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart } from 'oh-vue-icons/icons'
+  addIcons(BiColumnsGap, BiStickies, BiCartCheck, BiPeople, BiPalette, BiWindowStack, BiBoxArrowLeft, BiPostcardHeart)
 
   export default {
     name: 'SideNavbar',
@@ -108,3 +116,66 @@
     }
   }
 </style>
+
+<!-- 
+
+BiBack 
+BiBezier
+BiBrush  
+BiClipboard 
+BiCompass 
+BiCollection 
+BiCrop 
+BiBarChart 
+BiCardList 
+BiBasket2
+BiColumnsGap 
+BiGrid1X2
+BiLayoutWtf  
+BiGrid 
+BiBookmarkPlus 
+BiCreditCard 
+BiCalendarCheck
+BiCartCheck
+BiCashStack
+BiClipboardCheck 
+BiClipboardCheck   
+BiDiagram3 
+BiDistributeVertical 
+BiDoorOpen 
+BiFileBarGraph 
+BiGear 
+BiGraphUpArrow 
+BiLightningCharge 
+BiLightning 
+BiListCheck 
+BiListUl 
+BiPalette 
+BiPalette2
+BiPencilSquare 
+BiPencil 
+BiPen 
+BiPeople 
+BiPostcardHeart 
+BiShop 
+BiSliders 
+BiSliders2 
+BiStickies 
+BiSticky 
+BiSubtract 
+BiTable 
+BiTextLeft 
+BiTools 
+BiTrash 
+BiTrash3 
+BiUiChecksGrid 
+BiUiChecks 
+BiWindowStack 
+BiWindow 
+BiXLg 
+BiCardChecklist 
+BiBoxArrowLeft 
+
+
+  
+-->
