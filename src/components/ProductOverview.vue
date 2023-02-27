@@ -15,6 +15,7 @@
           <td>{{ product.price }}</td>
           <td>{{ product.description.substring(0, 40) + '...' }}</td>
           <td>{{ product.stock }}</td>
+          <td>{{}}</td>
         </tr>
       </tbody>
     </table>
@@ -25,9 +26,9 @@
   export default {
     name: 'ProductOverview',
     created() {
-      if (this.products[0].id === 0) {
+      /*      if (this.products[0].id === 0) {
         this.products.shift()
-      }
+      }*/
     },
     data: function () {
       return {
@@ -36,15 +37,6 @@
       }
     },
     methods: {
-      sortBy(sortKey) {
-        console.log(sortKey)
-        this.reverse = this.sortKey == sortKey ? !this.reverse : false
-        this.sortKey = sortKey
-      },
-      reverseUsers() {
-        this.users = this.users.reverse()
-        console.log(this.users)
-      },
       logStorage() {
         console.log(this.$store.state.products)
       },
