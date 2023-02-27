@@ -8,6 +8,7 @@ import CustomersView from './views/CustomersView.vue'
 import DesignView from './views/DesignView.vue'
 import PagesView from './views/PagesView.vue'
 import IconsView from './views/IconsView.vue'
+import EditProductView from './views/EditProductView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -23,6 +24,12 @@ export default createRouter({
       component: ProductsView,
       path: '/ProductsView',
       meta: { title: 'Products' },
+    },
+    {
+      name: 'EditProduct',
+      component: EditProductView,
+      path: '/EditProductView/:id',
+      meta: { title: 'EditProduct' },
     },
     {
       name: 'Categories',

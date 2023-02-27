@@ -8,14 +8,18 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product">
+      <tbody v-for="product in products" :key="product">
+        <tr>
           <td class="p-2">{{ product.id }}</td>
           <td>{{ product.title.substring(0, 40) + '...' }}</td>
           <td>{{ product.price }}</td>
           <td>{{ product.description.substring(0, 40) + '...' }}</td>
           <td>{{ product.stock }}</td>
-          <td>{{}}</td>
+          <!--<td><router-link :to="`/EditProductView/${product.id}`">Edit..</router-link></td>-->
+          <td @click="showEdit(product)">Edit..</td>
+        </tr>
+        <tr>
+          <div v-show="showthis === product">hejsan</div>
         </tr>
       </tbody>
     </table>
@@ -34,11 +38,19 @@
       return {
         columns: ['id', 'title', 'price', 'description', 'stock'],
         products: JSON.parse(this.$store.state.products),
+        showthis: false,
       }
     },
     methods: {
       logStorage() {
         console.log(this.$store.state.products)
+      },
+      showEdit(x) {
+        if (this.showthis === x) {
+          this.showthis = null
+        } else {
+          this.showthis = x
+        }
       },
     },
   }
