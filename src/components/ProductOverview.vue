@@ -4,22 +4,22 @@
       <thead>
         <tr>
           <th v-for="column in columns" @click="reverseProducts(column)" :key="column.id">
-            {{ column }}
+           <td>
+             {{ column }}
+           </td>
           </th>
         </tr>
       </thead>
-      <tbody v-for="product in products" :key="product">
-        <tr>
+      <tbody>
+        <tr v-for="product in products" :key="product">
+          <td>
+            <img :src="product.image" style="max-width: 50px" />
+          </td>
           <td class="p-2">{{ product.id }}</td>
-          <td>{{ product.title.substring(0, 40) + '...' }}</td>
+          <td><router-link :to="`/products/${product.id}`">{{ product.title.substring(0, 40) + '...' }}</router-link></td>
           <td>{{ product.price }}</td>
-          <td>{{ product.description.substring(0, 40) + '...' }}</td>
           <td>{{ product.stock }}</td>
-          <!--<td><router-link :to="`/EditProductView/${product.id}`">Edit..</router-link></td>-->
-          <td @click="showEdit(product)">Edit..</td>
-        </tr>
-        <tr>
-          <div v-show="showthis === product">hejsan</div>
+          <td>{{ product.active === 1 ? 'Active' : 'Inactive' }}</td>
         </tr>
       </tbody>
     </table>
@@ -30,28 +30,21 @@
   export default {
     name: 'ProductOverview',
     created() {
-      /*      if (this.products[0].id === 0) {
-        this.products.shift()
-      }*/
+      if (this.products) {
+        if (this.products[0].id === 0) {
+          this.products.shift()
+        }
+      }
     },
     data: function () {
       return {
-        columns: ['id', 'title', 'price', 'description', 'stock'],
-        products: JSON.parse(this.$store.state.products),
-        showthis: false,
+        columns: ['image', 'id', 'title', 'price', 'stock', 'active'],
+        /*products: this.$store.state.products,*/
+        products: JSON.parse(localStorage.getItem('products')),
       }
     },
     methods: {
-      logStorage() {
-        console.log(this.$store.state.products)
-      },
-      showEdit(x) {
-        if (this.showthis === x) {
-          this.showthis = null
-        } else {
-          this.showthis = x
-        }
-      },
+
     },
   }
 </script>
@@ -60,4 +53,7 @@
   tr:nth-child(even) {
     background-color: #dfdfdf;
   }
+
+
+
 </style>

@@ -1,16 +1,15 @@
 <template>
   <div>
-    <h1>hej</h1>
-    <EditProduct />
+    <ManageProduct />
   </div>
 </template>
 
 <script>
-  import EditProduct from '../components/EditProduct.vue'
+  import ManageProduct from '../components/ManageProduct.vue'
   export default {
     name: 'EditProduct',
     components: {
-      EditProduct,
+      ManageProduct,
     },
   }
 </script>

@@ -22,13 +22,13 @@ export default createRouter({
     {
       name: 'Products',
       component: ProductsView,
-      path: '/ProductsView',
+      path: '/products',
       meta: { title: 'Products' },
     },
     {
       name: 'EditProduct',
       component: EditProductView,
-      path: '/EditProductView/:id',
+      path: '/products/:id',
       meta: { title: 'EditProduct' },
     },
     {
