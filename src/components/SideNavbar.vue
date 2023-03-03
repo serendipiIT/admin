@@ -15,6 +15,8 @@
           <div>Dashboard</div>
         </div>
       </routerLink>
+
+      <!--      
       <routerLink class="menyItems" :to="{ name: 'Categories' }">
         <div>
           <div>
@@ -23,6 +25,8 @@
           <div>Categories</div>
         </div>
       </routerLink>
+ -->
+
       <routerLink class="menyItems" :to="{ name: 'Products' }">
         <div>
           <div>
@@ -31,6 +35,7 @@
           <div>Products</div>
         </div>
       </routerLink>
+
       <routerLink class="menyItems" :to="{ name: 'Orders' }">
         <div>
           <div>
@@ -39,7 +44,8 @@
           <div>Orders</div>
         </div>
       </routerLink>
-      <routerLink class="menyItems" :to="{ name: 'Customers' }">
+
+      <!--      <routerLink class="menyItems" :to="{ name: 'Customers' }">
         <div>
           <div>
             <v-icon name="bi-people" fill="gray" scale="1.4" />
@@ -47,6 +53,7 @@
           <div>Customers</div>
         </div>
       </routerLink>
+-->
       <routerLink class="menyItems" :to="{ name: 'Design' }">
         <div>
           <div>
@@ -55,6 +62,7 @@
           <div>Design</div>
         </div>
       </routerLink>
+
       <routerLink class="menyItems" :to="{ name: 'Pages' }">
         <div>
           <div>
@@ -63,7 +71,8 @@
           <div>Pages</div>
         </div>
       </routerLink>
-      <routerLink class="menyItems" :to="{ name: 'Icons' }">
+
+      <!--      <routerLink class="menyItems" :to="{ name: 'Icons' }">
         <div>
           <div>
             <v-icon name="bi-lightning" fill="gray" scale="1.4" />
@@ -71,6 +80,7 @@
           <div>Icons</div>
         </div>
       </routerLink>
+     -->
     </div>
     <div>
       <div class="flex menyItems">

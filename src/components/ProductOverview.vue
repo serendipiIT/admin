@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="componentCard">
     <table class="table table-auto w-full">
       <thead>
         <tr>
@@ -10,8 +10,8 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr v-for="product in products" :key="product">
+      <tbody class="divide-y divide-gray-500">
+        <tr class="h-2" v-for="product in products" :key="product">
           <td>
             <img :src="product.image" style="max-width: 50px" />
           </td>
@@ -38,7 +38,7 @@
     },
     data: function () {
       return {
-        columns: ['image', 'id', 'title', 'price', 'stock', 'active'],
+        columns: ['IMAGE', 'ID', 'TITLE', 'PRICE', 'STOCK', 'ACTIVE'],
         /*products: this.$store.state.products,*/
         products: JSON.parse(localStorage.getItem('products')),
       }
@@ -54,6 +54,14 @@
     background-color: #dfdfdf;
   }
 
+  th, td {
+  padding: 0.5rem 0;
+}
+
+img {
+  height: 3rem;
+  margin: auto;
+}
 
 
 </style>
