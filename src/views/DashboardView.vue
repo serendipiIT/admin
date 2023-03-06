@@ -1,7 +1,26 @@
 <template>
-  <div>
-    <h1>Dashboard</h1>
-  </div>
+  <main class="bg-gray-50 h-full bg-fixed">
+    <div>
+      <h1>Dashboard</h1>
+    </div>
+    <div class="componentCard">
+      <h2>Welcome!</h2>
+    </div>
+    <div class="content grid grid-cols-2 gap-4">
+      <div class="componentCard">
+        <h2>Products</h2>
+      </div>
+      <div class="componentCard">
+        <h2>Orders</h2>
+      </div>
+      <div class="componentCard">
+        <h2>Marketing</h2>
+      </div>
+      <div class="componentCard">
+        <h2>Customers</h2>
+      </div>
+    </div>
+  </main>
 </template>
 
 <script>

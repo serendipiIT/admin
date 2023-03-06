@@ -102,4 +102,12 @@
       background-color: #1e8449;
     }
   }
+
+  .redW {
+    background-color: #a71e1e;
+    color: #fff;
+    &:hover {
+      background-color: #760e0e;
+    }
+  }
 </style>

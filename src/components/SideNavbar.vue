@@ -2,11 +2,11 @@
   <nav class="fixed flex flex-col justify-between h-screen border-r-2 w-56 text-gray-500 py-16 px-4">
     <div class="text-center text-black">
       <img src="/assets/b-logo.png" alt="logo" class="w-24 m-auto mb-5" />
-      <h1 class="text-xl inline-block align-middle">serendip</h1>
+      <h1 class="text-lg inline-block align-middle">serendip</h1>
       <span class="text-3xl font-medium inline-block align-middle">IT</span>
-      <h1 class="text-xl inline-block align-middle">solutions</h1>
+      <h1 class="text-lg inline-block align-middle">solutions</h1>
     </div>
-    <div class="flex flex-col justify-center focus-within:text-gray-600">
+    <div class="flex flex-col justify-center focus-within:text-gray-600 mb-8">
       <routerLink class="menyItems" :to="{ name: 'home' }">
         <div>
           <div>

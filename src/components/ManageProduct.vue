@@ -40,7 +40,7 @@
         <div id="media" class="componentCard">
           <label for="image">Image</label>
           <div>
-            <img :src="product.image" alt="" width="200" />
+            <img :src="newImg" alt="" width="200" />
             <div>
               <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
             </div>
@@ -56,7 +56,7 @@
           </div>
 
           <div>
-            <label for="sizeguide">Sizeguide</label>
+            <label for="sizeguide">Size Guide</label>
             <div class="textFieldInput">
               <input type="text" id="sizeguide" v-model="product.sizeguide" />
             </div>
@@ -116,12 +116,16 @@
 
     <div class="flex justify-between">
       <UpdateServer class="button-68" />
-      <button class="button-68 greenW" role="button" @click="putProduct()">Save Product</button>
+      <div>
+        <button class="button-68 redW mr-3" role="button" @click="delProduct()">Delete Product</button>
+        <button class="button-68 greenW" role="button" @click="putProduct()">Save Product</button>
+      </div>
     </div>
   </main>
 </template>
 
 <script>
+  import axios from 'axios'
   import UpdateServer from './UpdateServer.vue'
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
   import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
@@ -147,6 +151,7 @@
         prevId: null,
         active: false,
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
+        /*newImg: document.querySelector('#image').files[0].name,*/
       }
     },
     created() {
@@ -188,6 +193,14 @@
         const response = await fetch(`${this.urlApi}products/${this.product.id}`, requestOptions)
         const data = await response.json()
         console.log(data)
+      },
+
+      async delProduct() {
+        await axios({
+          method: 'delete',
+          url: `${this.urlApi}products/${this.id}`,
+        })
+        console.log('delete')
       },
     },
   }
