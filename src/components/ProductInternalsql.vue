@@ -4,9 +4,9 @@
       <thead>
         <tr>
           <th v-for="column in columns" @click="reverseProducts(column)" :key="column.id">
-           <td>
-             {{ column }}
-           </td>
+          <td>
+            {{ column }}
+          </td>
           </th>
         </tr>
       </thead>
@@ -36,9 +36,7 @@
         products: JSON.parse(localStorage.getItem('products')),
       }
     },
-    methods: {
-
-    },
+    methods: {},
   }
 </script>
 
@@ -47,14 +45,13 @@
     background-color: #dfdfdf;
   }
 
-  th, td {
-  padding: 0.5rem 0;
-}
+  th,
+  td {
+    padding: 0.5rem 0;
+  }
 
-img {
-  height: 3rem;
-  margin: auto;
-}
-
-
+  img {
+    height: 3rem;
+    margin: auto;
+  }
 </style>
