@@ -9,6 +9,7 @@ import DesignView from './views/DesignView.vue'
 import PagesView from './views/PagesView.vue'
 import IconsView from './views/IconsView.vue'
 import EditProductView from './views/EditProductView.vue'
+import CreateNewView from './views/CreateNewView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -31,6 +32,7 @@ export default createRouter({
       path: '/products/:id',
       meta: { title: 'EditProduct' },
     },
+    { name: 'CreateNew', component: CreateNewView, path: '/create', meta: { title: 'CreateNew' } },
     {
       name: 'Categories',
       component: CategoriesView,

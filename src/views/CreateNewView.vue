@@ -1,0 +1,188 @@
+<template>
+  <main>
+    <div id="top" class="items-baseline">
+      <div>
+        <RouterLink to="/products" class="btn-arrow button-68">
+          <v-icon name="bi-chevron-left" fill="gray" hover scale="1" />
+        </RouterLink>
+      </div>
+
+      <h1 class="text-xl self-end" />
+
+      <div>
+        <RouterLink to="/products/2" class="btn-arrow button-68">
+          <v-icon name="bi-chevron-left" fill="gray" hover scale="1" />
+        </RouterLink>
+        <RouterLink to="/products/3" class="btn-arrow button-68">
+          <v-icon name="bi-chevron-right" fill="gray" hover scale="1" />
+        </RouterLink>
+      </div>
+    </div>
+    <form id="content">
+      <div id="center">
+        <div id="productinfo" class="componentCard">
+          <div>
+            <h3 for="title">Title</h3>
+            <div class="textFieldInput">
+              <input type="textarea" id="title" style="width: 40vw" v-model="product.title" />
+            </div>
+          </div>
+          <div class="border-t pt-2 border-gray-200">
+            <h3 for="description">Description</h3>
+            <div class="textFieldInput">
+              <textarea id="description" name="description" v-model="product.description" style="height: 100%; min-height: 10rem; width: 40vw" />
+            </div>
+          </div>
+        </div>
+
+        <div id="media" class="componentCard">
+          <label for="image">Image</label>
+          <div>
+            <img :src="newImg" alt="" width="200" />
+            <div>
+              <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+            </div>
+          </div>
+        </div>
+
+        <div id="extrainfo" class="componentCard">
+          <div>
+            <label for="material">Material</label>
+            <div class="textFieldInput">
+              <input type="text" id="material" v-model="product.material" />
+            </div>
+          </div>
+
+          <div>
+            <label for="sizeguide">Size Guide</label>
+            <div class="textFieldInput">
+              <input type="text" id="sizeguide" v-model="product.sizeguide" />
+            </div>
+          </div>
+
+          <div>
+            <label for="info">Info</label>
+            <div class="textFieldInput">
+              <input type="text" id="info" v-model="product.info" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="side">
+        <div class="componentCard">
+          <div id="status">
+            <label for="active">Product status</label>
+            <div class="textFieldInput">
+              <select v-model="active" id="active">
+                <option value="1">Active</option>
+                <option value="0">Inactive</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="price" class="border-t pt-2 border-gray-200">
+            <label for="price">Price</label>
+            <div class="textFieldInput" style="flex-direction: row">
+              <input type="text" id="price" size="7" v-model="product.price" />
+              <div>kr</div>
+            </div>
+          </div>
+
+          <div id="organization" class="border-t pt-2 border-gray-200">
+            <label for="stock">Stock</label>
+            <div class="textFieldInput" style="flex-direction: row">
+              <input type="text" id="stock" size="7" v-model="product.stock" />
+              <div>st</div>
+            </div>
+
+            <div class="border-t pt-2 border-gray-200">
+              <label for="category">Category</label>
+              <div class="textFieldInput">
+                <select v-model="product.category">
+                  <option value="electronics">electronics</option>
+                  <option value="jewelery">jewelery</option>
+                  <option value="men's clothing">men's clothing</option>
+                  <option value="women's clothing">women's clothing</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="flex justify-end">
+      <div>
+        <button class="button-68 greenW" role="button" @click="putProduct()">Save Product</button>
+      </div>
+    </div>
+  </main>
+</template>
+<script>
+  import { OhVueIcon, addIcons } from 'oh-vue-icons'
+  import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
+  import { RouterLink } from 'vue-router'
+  addIcons(BiChevronLeft, BiChevronRight)
+
+  export default {
+    name: 'CreateNew',
+
+    components: {
+      'v-icon': OhVueIcon,
+      RouterLink,
+    },
+
+    data() {
+      return {
+        product: {
+          title: null,
+          price: null,
+          description: null,
+          category: null,
+          stock: null,
+        },
+      }
+    },
+    created() {},
+    methods: {},
+  }
+</script>
+
+<style lang="scss" scoped>
+  main {
+    width: 90%;
+    max-width: max-content;
+    margin: auto;
+    font-size: 1rem;
+    #top {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1rem;
+      & > * {
+        padding: 1rem;
+      }
+      h1 {
+        flex-grow: 1;
+      }
+    }
+
+    form {
+      display: flex;
+      #center {
+        flex-grow: 3;
+      }
+      #side {
+        flex-grow: 2;
+        width: 16rem;
+      }
+      div {
+        & > * {
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+      }
+    }
+  }
+</style>

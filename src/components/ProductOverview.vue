@@ -1,4 +1,8 @@
 <template>
+  <div class="componentTitle flex justify-between">
+    <h1>Products</h1>
+    <router-link :to="`/create`"><button class="button-68 greenW" role="button">Add Product</button></router-link>
+  </div>
   <div class="componentCard">
     <table class="table table-auto w-full">
       <thead>
