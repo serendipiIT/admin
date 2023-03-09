@@ -40,6 +40,7 @@ export default createRouter({
       path: '/products/:id',
       meta: { title: 'EditProduct' },
     },
+    { name: 'CreateNew', component: CreateNewView, path: '/create', meta: { title: 'CreateNew' } },
     {
       name: 'Categories',
       component: CategoriesView,

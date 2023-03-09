@@ -21,6 +21,10 @@
     box-shadow: 2px 2px 5px 5px rgba(225, 225, 225, 0.68);
   }
 
+  .componentTitle {
+    margin: 1.2rem;
+  }
+
   .textFieldInput {
     border: 1px solid #b9b9b9;
     display: flex;
