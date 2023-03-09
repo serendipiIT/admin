@@ -1,18 +1,16 @@
 <template>
   <div>
     <ProductOverview />
-    <UpdateServer />
+    <button @click="$store.dispatch('getProducts')">Hämta ny data från servern</button>
   </div>
 </template>
 
 <script>
   import ProductOverview from '../components/ProductOverview.vue'
-  import UpdateServer from '../components/UpdateServer.vue'
   export default {
     name: 'ProductsView',
     components: {
       ProductOverview,
-      UpdateServer,
     },
   }
 </script>

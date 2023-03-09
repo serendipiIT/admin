@@ -1,45 +1,66 @@
+import VuexPersistence from 'vuex-persist'
 import { createStore } from 'vuex'
 
+import { byId, byPrice, byStock, byTitle } from './sortAndFilter'
+
+const actions = {
+  async getProducts({ commit }) {
+    const products = (await (await fetch('http://SITsApi.us-east-1.elasticbeanstalk.com/products')).json()).data
+    const productsFixedKeys = products
+      .filter((product) => product.color && product.size)
+      .map((product) => {
+        return {
+          ...product,
+          size: product.size.split(','),
+          color: product.color.split(','),
+        }
+      })
+    commit('setProductList', productsFixedKeys)
+  },
+}
+
+const getters = {
+  getProductPage: (state) => (page) => {
+    const start = (page - 1) * 10
+    const end = page * 10
+    return state.productList.slice(start, end)
+  },
+  getLastPageNumber(state) {
+    return Math.ceil(state.productList.length / 10)
+  },
+}
+
 const mutations = {
-  /*  updateProducts(state, result) {
-    state.products = result
-  },*/
+  setProductList(state, products) {
+    state.productList = products
+  },
+  sortById(state) {
+    state.productList = [...state.productList].sort(byId)
+  },
+  sortByPrice(state) {
+    state.productList = [...state.productList].sort(byPrice)
+  },
+  sortByStock(state) {
+    state.productList = [...state.productList].sort(byStock)
+  },
+  sortByTitle(state) {
+    state.productList = [...state.productList].sort(byTitle)
+  },
 }
 
 const state = {
-  /*products: JSON.parse(localStorage.getItem('products')),*/
+  productList: [],
 }
 
+const vuexLocal = new VuexPersistence({
+  storage: window.localStorage,
+})
+
 export default createStore({
+  actions,
+  getters,
   mutations,
   state,
   strict: true,
+  plugins: [vuexLocal.plugin],
 })
-
-/*
-getProducts = () => {
-  fetch({
-  method: 'get',
-  url: `http://SITsApi.us-east-1.elasticbeanstalk.com/products`,
-  })
-  .then((response) => {
-    localStorage.setItem('products', JSON.stringify(commits.data))
-  })
-}
-
-
-fetch('http://SITsApi.us-east-1.elasticbeanstalk.com/products')
-  .then(response => {
-  console.log(response.data.data)
-  })
-
-
-  let url = 'http://SITsApi.us-east-1.elasticbeanstalk.com/products';
-let response = await fetch(url)
-let commits = await response.json()
-
-console.log(commits)
-
-
-
-*/
