@@ -7,9 +7,7 @@
         </RouterLink>
       </div>
 
-      <h1 class="text-xl self-end">{{ product.title }}</h1>
-
-      <p class="self-end">id: {{ product.id }}</p>
+      <h1 class="text-xl self-end" />
 
       <div>
         <RouterLink to="/products/2" class="btn-arrow button-68">
@@ -40,7 +38,7 @@
         <div id="media" class="componentCard">
           <label for="image">Image</label>
           <div>
-            <img :src="newImg" alt="" width="200" />
+            <img :src="product.image" alt="" width="200" />
             <div>
               <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
             </div>
@@ -58,7 +56,7 @@
           <div>
             <label for="sizeguide">Size Guide</label>
             <div class="textFieldInput">
-              <input type="text" id="sizeguide" v-model="product.sizeguide" />
+              <input type="text" id="sizeguide" v-model="product.size_guide" />
             </div>
           </div>
 
@@ -76,7 +74,7 @@
           <div id="status">
             <label for="active">Product status</label>
             <div class="textFieldInput">
-              <select v-model="active" id="active">
+              <select v-model="product.active" id="active">
                 <option value="1">Active</option>
                 <option value="0">Inactive</option>
               </select>
@@ -87,7 +85,7 @@
             <label for="price">Price</label>
             <div class="textFieldInput" style="flex-direction: row">
               <input type="text" id="price" size="7" v-model="product.price" />
-              <div>kr</div>
+              <div>$</div>
             </div>
           </div>
 
@@ -101,12 +99,35 @@
             <div class="border-t pt-2 border-gray-200">
               <label for="category">Category</label>
               <div class="textFieldInput">
-                <select v-model="product.category">
-                  <option value="electronics">electronics</option>
-                  <option value="jewelery">jewelery</option>
-                  <option value="men's clothing">men's clothing</option>
-                  <option value="women's clothing">women's clothing</option>
+                <select v-model="product.category2">
+                  <option value="Man">Man</option>
+                  <option value="Woman">Woman</option>
+                  <option value="Accessories">Accessories</option>
                 </select>
+              </div>
+            </div>
+            <div class="border-t pt-2 border-gray-200">
+              <label for="color">Color</label>
+              <div id="color" class="grid grid-cols-6">
+                <div v-for="col in color" :key="col">
+                  <div
+                    @click="toggleColor(col)"
+                    :class="checkedColors.includes(col) ? 'border-2 border-box border-gray-900' : 'border'"
+                    class="rounded-full w-4 h-4 m-1"
+                    :style="{ backgroundColor: col }"
+                  />
+                </div>
+              </div>
+
+              <div class="border-t pt-2 border-gray-200">
+                <label for="size">Size</label>
+                <div id="checkboxes">
+                  <pre>{{ checkedSizes }}</pre>
+                  <div v-for="size in sizes" :key="size">
+                    <input v-model="checkedSizes" :id="size" type="checkbox" :value="size" />
+                    <label :for="size">{{ size }}</label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -114,115 +135,94 @@
       </div>
     </form>
 
-    <div class="flex justify-between">
-      <UpdateServer class="button-68" />
+    <div class="flex justify-end">
       <div>
-        <button class="button-68 redW mr-3" role="button" @click="delProduct()">Delete Product</button>
-        <button class="button-68 greenW" role="button" @click="putProduct()">Save Product</button>
+        <button class="button-68 greenW" role="button" @click="postProduct()">Add New Product</button>
       </div>
     </div>
   </main>
 </template>
-
 <script>
-  import axios from 'axios'
-  import UpdateServer from './UpdateServer.vue'
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
   import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
   import { RouterLink } from 'vue-router'
   addIcons(BiChevronLeft, BiChevronRight)
 
   export default {
-    name: 'ManageProduct',
+    name: 'CreateNew',
 
     components: {
-      UpdateServer,
       'v-icon': OhVueIcon,
       RouterLink,
     },
 
     data() {
       return {
-        id: parseInt(this.$route.params.id),
-        productList: JSON.parse(localStorage.getItem('products')),
-        /* productList: this.$store.state.products,*/
-        product: null,
-        nextId: 1,
-        prevId: null,
-        active: false,
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
-        /*newImg: document.querySelector('#image').files[0].name,*/
+        color: ['White', 'Gray', 'Black', 'Brown', 'Green', 'Red', 'Yellow', 'Blue'],
+        sizes: ['XS', 'S', 'M', 'L', 'XL', '32', '34', '36', '38', '40', '42', '44', 'One Size'],
+        product: {
+          category2: null,
+          title: null,
+          price: null,
+          description: null,
+          image: null,
+          stock: null,
+          active: null,
+          material: null,
+          size_guide: null,
+          info: null,
+          color: 'White',
+          size: 'XL',
+        },
+        checkedSizes: [],
+        checkedColors: [],
       }
     },
-    created() {
-      this.product = this.$store.state.productList.find((element) => element.id === this.id)
-      this.nextId = this.product + 1
-      this.prevId = this.product - 1
-      // console.log(this.product.active)
-      // if (this.product.active === 1) {
-      //   this.active = true
-      // }
-    },
+    created() {},
     methods: {
-      buttonfjopp() {
-        // console.log(this.product.id)
-        // console.log(this.product.title)
-        // console.log(this.product.price)
-        // console.log(this.product.description)
-        // console.log(this.product.category)
-        // console.log(this.product.image)
-        // console.log(this.product.stock)
-        // console.log(this.product.active)
-      },
-
-      async putProduct() {
+      async postProduct() {
         const requestOptions = {
-          method: 'PUT',
+          method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            title: `${this.product.title}`,
+            title: `'${this.product.title}'`,
             price: parseInt(this.product.price),
-            description: `${this.product.description}`,
-            category: `${this.product.category}`,
-            image: `${this.product.image}`,
+            description: `'${this.product.description}'`,
+            category2: `'${this.product.category2}'`,
+            image: `'${this.product.image}'`,
             stock: parseInt(this.product.stock),
             active: parseInt(this.product.active),
+            material: `'${this.product.material}'`,
+            size_guide: `'${this.product.size_guide}'`,
+            info: `'${this.product.info}'`,
+            color: `'${this.checkedColors.length > 0 ? this.checkedColors.join(',') : 'White'}'`,
+            size: `'${this.checkedSizes.length > 0 ? this.checkedSizes.join(',') : 'S'}'`,
           }),
         }
-        const response = await fetch(`${this.urlApi}products/${this.product.id}`, requestOptions)
+        const response = await fetch(`${this.urlApi}products`, requestOptions)
         const data = await response.json()
         console.log(data)
       },
-
-      async delProduct() {
-        await axios({
-          method: 'delete',
-          url: `${this.urlApi}products/${this.id}`,
-        })
-        console.log('delete')
+      toggleColor(color) {
+        this.checkedColors = this.checkedColors.includes(color) ? this.checkedColors.filter((c) => c !== color) : [...this.checkedColors, color]
       },
     },
   }
-
-  /*let changeImg = this.image
-      if (this.image === null) {
-        changeImg = '/assets/product-img/example.jpg'
-      }
-
-      await axios({
-        method: 'put',
-        url: `${this.urlApi}products/${this.product.id}`,
-        data: {
-          title: `"${this.product.title}"`,
-          price: this.product.price,
-          description: `"${this.product.description}"`,
-          category: `"${this.product.category}"`,
-          image: `"${changeImg}"`,
-          stock: `"${this.product.stock}"`,
-        },*/
 </script>
 
 <style lang="scss" scoped>
+  #checkboxes {
+    div {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  #color {
+    display: grid;
+  }
+
   main {
     width: 90%;
     max-width: max-content;
