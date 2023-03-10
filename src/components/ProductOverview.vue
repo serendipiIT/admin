@@ -7,7 +7,7 @@
     <table class="table table-auto w-full">
       <thead>
         <tr>
-          <th v-for="column in columns" :key="column.id" @click="sort(column)">
+          <th v-for="column in columns" :key="column" @click="sort(column)">
           <td>
             {{ column.toUpperCase() }}
           </td>
@@ -15,23 +15,26 @@
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-500">
-        <tr class="h-2" v-for="product in productPage(currentPage)" :key="product">
-          <td>
-            <img :src="product.image" style="max-width: 50px" />
+        <TransitionGroup class="h-2" name="product-list" tag="tr" v-for="product in productPage(currentPage)" :key="product.title">
+
+          <!-- <tr class="h-2" v-for="product in productPage(currentPage)" :key="product"> -->
+          <td :key="product.id">
+              <img :src="product.image" style="max-width: 50px" />
           </td>
-          <td class="p-2">{{ product.id }}</td>
-          <td>
+          <td :key="product.id" class="p-2">{{ product.id }}</td>
+          <td :key="product.id">
             <router-link :to="`/products/${product.id}`">{{ product.title.substring(0, 40) + '...' }}</router-link>
           </td>
-          <td>{{ product.price }}</td>
-          <td>{{ product.stock }}</td>
-          <td>{{ product.active === 1 ? 'Active' : 'Inactive' }}</td>
-        </tr>
+          <td :key="product.id">{{ product.price }}</td>
+          <td :key="product.id">{{ product.stock }}</td>
+          <td :key="product.id">{{ product.active === 1 ? 'Active' : 'Inactive' }}</td>
+          <!-- </tr> -->
+        </TransitionGroup>
       </tbody>
     </table>
     <div class="mt-4 flex flex-row justify-between px-10">
-      <button :disabled="currentPage > 1 ? false : true" @click="$router.push(`/products?page=${currentPage - 1}`)">Previous</button>
-      <button :disabled="currentPage < lastPage ? false : true" @click="$router.push(`/products?page=${currentPage + 1}`)">Next</button>
+      <button :disabled="currentPage > 1 ? false : true" @click="$router.push(prevPage)">Previous</button>
+      <button :disabled="currentPage < lastPage ? false : true" @click="$router.push(nextPage)">Next</button>
     </div>
   </div>
 </template>
@@ -46,17 +49,24 @@
         productPage: 'getProductPage',
         lastPage: 'getLastPageNumber',
       }),
+      prevPage() {
+        return `/products?page=${this.currentPage - 1}?items=${this.itemsPerPage}`
+      },
+      nextPage() {
+        return `/products?page=${this.currentPage + 1}?items=${this.itemsPerPage}`
+      }
     },
     created() {
       this.setPage()
     },
     data: function () {
       return {
-        columns: ['Image', 'Id', 'Title', 'Price', 'Stock', 'Active'],
+        activeSort: null,
+        columns: ['Image', 'Id', 'Title', 'Category', 'Price', 'Stock', 'Active'],
         currentPage: 1,
+        itemsPerPage: 10,
         /*products: this.$store.state.products,*/
         products: JSON.parse(localStorage.getItem('products')),
-        activeSort: null
       }
     },
   methods: {
@@ -72,7 +82,9 @@
     },
       setPage() {
         const pageQuery = this.$route.query.page
+        const itemsPerPageQuery = this.$route.query.items
         this.currentPage = parseInt(pageQuery <= this.lastPage || pageQuery < 1 ? pageQuery : 1) || 1
+        this.itemsPerPage = parseInt(itemsPerPageQuery) || 10
       },
     },
     watch: {
@@ -96,5 +108,9 @@
   img {
     height: 3rem;
     margin: auto;
+  }
+
+  .product-list-move {
+    transition: transform .5s;
   }
 </style>

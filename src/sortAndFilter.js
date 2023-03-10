@@ -6,7 +6,9 @@ function genericSort(key) {
   }
 }
 
+export const byActive = genericSort('active')
+export const byCategory = genericSort('category')
+export const byId = genericSort('id')
 export const byPrice = genericSort('price')
 export const byStock = genericSort('stock')
-export const byId = genericSort('id')
 export const byTitle = genericSort('title')
