@@ -23,13 +23,13 @@ const actions = {
 }
 
 const getters = {
-  getProductPage: (state) => (page) => {
-    const start = (page - 1) * 10
-    const end = page * 10
+  getProductPage: (state) => (page) => (items) => {
+    const start = (page - 1) * items
+    const end = page * items
     return state.productList.slice(start, end)
   },
-  getLastPageNumber(state) {
-    return Math.ceil(state.productList.length / 10)
+  getLastPageNumber: (state) => (items) => {
+    return Math.ceil(state.productList.length / items)
   },
 }
 
