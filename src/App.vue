@@ -15,7 +15,7 @@
 
 <template>
   <SideNavbar />
-  <main @click="closeFilterModal" class="ml-56 bg-gray-50 h-full p-8 bg-fixed">
+  <main @click="closeFilterModal" class="sm:ml-56 bg-gray-50 h-full p-8 bg-fixed">
     <RouterView />
   </main>
 </template>
