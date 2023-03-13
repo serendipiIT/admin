@@ -29,9 +29,10 @@
           </div>
           <div class="border-t pt-2 border-gray-200">
             <h3 for="description">Description</h3>
-            <div class="textFieldInput">
-              <textarea id="description" name="description" v-model="product.description" style="height: 100%; min-height: 10rem; width: 40vw" />
-            </div>
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" />
+            <!--            <div class="textFieldInput">
+              <textarea id="description" name="description" style="height: 100%; min-height: 10rem; width: 40vw" />
+            </div>-->
           </div>
         </div>
 
@@ -143,6 +144,8 @@
   </main>
 </template>
 <script>
+  import { QuillEditor } from '@vueup/vue-quill'
+  import '@vueup/vue-quill/dist/vue-quill.snow.css'
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
   import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
   import { RouterLink } from 'vue-router'
@@ -154,6 +157,7 @@
     components: {
       'v-icon': OhVueIcon,
       RouterLink,
+      QuillEditor,
     },
 
     data() {
