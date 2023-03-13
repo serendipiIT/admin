@@ -29,20 +29,22 @@
               <input type="textarea" id="title" style="width: 40vw" v-model="product.title" />
             </div>
           </div>
+
           <div class="border-t pt-2 border-gray-200">
             <h3 for="description">Description</h3>
-            <div class="textFieldInput">
-              <textarea id="description" name="description" v-model="product.description" style="height: 100%; min-height: 10rem; width: 40vw" />
-            </div>
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" />
+            <!--            <div class="textFieldInput">
+              <textarea id="description" name="description" style="height: 100%; min-height: 10rem; width: 40vw" />
+            </div>-->
           </div>
         </div>
 
         <div id="media" class="componentCard">
           <label for="image">Image</label>
           <div>
-            <img :src="newImg" alt="" width="200" />
+            <img :src="hejsan" :alt="hejsan" width="200" />
             <div>
-              <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+              <input type="file" id="imagewhopi" name="image" accept="image/png, image/jpeg" />
             </div>
           </div>
         </div>
@@ -113,18 +115,20 @@
         </div>
       </div>
     </form>
-
+    {{ hejsan }}
     <div class="flex justify-between">
       <UpdateServer class="button-68" />
       <div>
         <button class="button-68 redW mr-3" role="button" @click="delProduct()">Delete Product</button>
-        <button class="button-68 greenW" role="button" @click="putProduct()">Save Product</button>
+        <button class="button-68 greenW" role="button" @click="putProduct()">Save</button>
       </div>
     </div>
   </main>
 </template>
 
 <script>
+  import { QuillEditor } from '@vueup/vue-quill'
+  import '@vueup/vue-quill/dist/vue-quill.snow.css'
   import axios from 'axios'
   import UpdateServer from './UpdateServer.vue'
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
@@ -139,12 +143,30 @@
       UpdateServer,
       'v-icon': OhVueIcon,
       RouterLink,
+      QuillEditor,
     },
+
+    computed: {
+      productList() {
+        return JSON.parse(localStorage.getItem('products'))
+      },
+
+      hejsan() {
+        if (document.querySelector('#imagewhopi') === null) {
+          return 'Hejsan!'
+        } else {
+          return document.querySelector('#imagewhopi')
+        }
+      },
+      /*newImg: productList. document.querySelector('#image').files[0].name,*/
+    },
+
+    whatch: {},
 
     data() {
       return {
         id: parseInt(this.$route.params.id),
-        productList: JSON.parse(localStorage.getItem('products')),
+        /*productList: JSON.parse(localStorage.getItem('products')),*/
         /* productList: this.$store.state.products,*/
         product: null,
         nextId: 1,
@@ -158,23 +180,8 @@
       this.product = this.$store.state.productList.find((element) => element.id === this.id)
       this.nextId = this.product + 1
       this.prevId = this.product - 1
-      // console.log(this.product.active)
-      // if (this.product.active === 1) {
-      //   this.active = true
-      // }
     },
     methods: {
-      buttonfjopp() {
-        // console.log(this.product.id)
-        // console.log(this.product.title)
-        // console.log(this.product.price)
-        // console.log(this.product.description)
-        // console.log(this.product.category)
-        // console.log(this.product.image)
-        // console.log(this.product.stock)
-        // console.log(this.product.active)
-      },
-
       async putProduct() {
         const requestOptions = {
           method: 'PUT',
@@ -203,23 +210,6 @@
       },
     },
   }
-
-  /*let changeImg = this.image
-      if (this.image === null) {
-        changeImg = '/assets/product-img/example.jpg'
-      }
-
-      await axios({
-        method: 'put',
-        url: `${this.urlApi}products/${this.product.id}`,
-        data: {
-          title: `"${this.product.title}"`,
-          price: this.product.price,
-          description: `"${this.product.description}"`,
-          category: `"${this.product.category}"`,
-          image: `"${changeImg}"`,
-          stock: `"${this.product.stock}"`,
-        },*/
 </script>
 
 <style lang="scss" scoped>
