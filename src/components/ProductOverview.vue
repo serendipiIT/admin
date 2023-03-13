@@ -1,20 +1,24 @@
 <template>
+  <Teleport to="#modal">
+    <FilterModal v-if="isFilterOpen" />
+  </Teleport>
   <div class="componentTitle flex justify-between items-center">
     <h1>Products</h1>
-    <div>
+    <div class="flex-1 text-center">
       <p class="mr-2 inline">Items per page:</p>
       <button class="mr-2" @click="changeItemsPerPage(10)">10</button>
       <button class="mr-2" @click="changeItemsPerPage(20)">20</button>
       <button class="mr-2" @click="changeItemsPerPage(50)">50</button>
       <button class="mr-2" @click="changeItemsPerPage()">All</button>
     </div>
+    <button @click="openFilter" class="button-68 blueW mr-8">All Filters</button>
     <router-link to="/create"><button class="button-68 greenW" role="button">Add Product</button></router-link>
   </div>
   <div class="componentCard">
     <table class="table table-auto w-full">
       <thead>
         <tr class="table-row">
-          <th v-for="column in columns" :key="column" @click="sort(column)">
+          <th v-for="column in columns" :key="column" @click="sort(column)" :class="column !== 'Image' && 'cursor-pointer'">
             {{ column.toUpperCase() }}
             <template v-if="column != 'Image'">
               <v-icon v-if="column === activeSort && reverse" name="co-arrow-thick-top" scale=".8" />
@@ -62,15 +66,29 @@
   import { CoArrowThickBottom, CoArrowThickTop } from 'oh-vue-icons/icons'
   addIcons(CoArrowThickBottom, CoArrowThickTop)
 
+  import { useFilterModal } from '../filterModal'
+  import FilterModal from './FilterModal.vue'
+
   export default {
+    setup() {
+      const filterModal = useFilterModal()
+
+      return {
+        closeFilter: filterModal.closeFilter,
+        isFilterOpen: filterModal.isOpen,
+        openFilter: filterModal.openFilter,
+      }
+    },
     name: 'ProductOverview',
     components: {
       'v-icon': OhVueIcon,
+      FilterModal,
     },
     computed: {
       ...mapGetters({
         productPage: 'getProductPage',
         lastPageNumber: 'getLastPageNumber',
+        filteredProducts: 'getFilteredProductList',
       }),
       firstPage() {
         return `/products?page=${1}&items=${this.itemsPerPage}`

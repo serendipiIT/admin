@@ -1,7 +1,7 @@
 import VuexPersistence from 'vuex-persist'
 import { createStore } from 'vuex'
 
-import { byActive, byCategory, byId, byPrice, byStock, byTitle } from './sortAndFilter'
+import { byActive, byCategory, byId, byPrice, byStock, byTitle, filterProducts } from './sortAndFilter'
 
 const actions = {
   async getProducts({ commit }) {
@@ -23,6 +23,10 @@ const actions = {
 }
 
 const getters = {
+  getFilteredProductList(state) {
+    return filterProducts(state.productList, state.filters)
+    // return
+  },
   getProductPage: (state) => (page) => (items) => {
     const start = (page - 1) * items
     const end = page * items
@@ -34,6 +38,9 @@ const getters = {
 }
 
 const mutations = {
+  setFilters(state, filters) {
+    state.filters = filters
+  },
   setProductList(state, products) {
     state.productList = products
   },
@@ -64,6 +71,8 @@ const mutations = {
 }
 
 const state = {
+  filteredProductList: [],
+  filters: {},
   productList: [],
 }
 
