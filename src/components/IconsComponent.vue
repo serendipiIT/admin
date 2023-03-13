@@ -82,6 +82,7 @@
         <li><!--5--><v-icon name="bi-trash3" fill="gray" hover scale="3" /></li>
         <li><!--6--><v-icon name="bi-box-arrow-left" fill="gray" hover scale="3" /></li>
         <li><!--7--><v-icon name="bi-door-open" fill="gray" hover scale="3" /></li>
+        <li><!--7--><v-icon name="bi-postcard-heart" fill="gray" hover scale="3" /></li>
       </ol>
     </div>
   </div>

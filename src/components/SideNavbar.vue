@@ -16,7 +16,7 @@
         </div>
       </routerLink>
 
-      <!--      
+      <!--
       <routerLink class="menyItems" :to="{ name: 'Categories' }">
         <div>
           <div>
@@ -69,6 +69,15 @@
             <v-icon name="bi-window-stack" fill="gray" scale="1.4" />
           </div>
           <div>Pages</div>
+        </div>
+      </routerLink>
+
+      <routerLink class="menyItems" :to="{ name: 'Journal' }">
+        <div>
+          <div>
+            <v-icon name="bi-postcard-heart" fill="gray" scale="1.4" />
+          </div>
+          <div>Journal</div>
         </div>
       </routerLink>
 
@@ -135,65 +144,65 @@
   }
 </style>
 
-<!-- 
+<!--
 
-BiBack 
+BiBack
 BiBezier
-BiBrush  
-BiClipboard 
-BiCompass 
-BiCollection 
-BiCrop 
-BiBarChart 
-BiCardList 
+BiBrush
+BiClipboard
+BiCompass
+BiCollection
+BiCrop
+BiBarChart
+BiCardList
 BiBasket2
-BiColumnsGap 
+BiColumnsGap
 BiGrid1X2
-BiLayoutWtf  
-BiGrid 
-BiBookmarkPlus 
-BiCreditCard 
+BiLayoutWtf
+BiGrid
+BiBookmarkPlus
+BiCreditCard
 BiCalendarCheck
 BiCartCheck
 BiCashStack
-BiClipboardCheck 
-BiClipboardCheck   
-BiDiagram3 
-BiDistributeVertical 
-BiDoorOpen 
-BiFileBarGraph 
-BiGear 
-BiGraphUpArrow 
-BiLightningCharge 
-BiLightning 
-BiListCheck 
-BiListUl 
-BiPalette 
+BiClipboardCheck
+BiClipboardCheck
+BiDiagram3
+BiDistributeVertical
+BiDoorOpen
+BiFileBarGraph
+BiGear
+BiGraphUpArrow
+BiLightningCharge
+BiLightning
+BiListCheck
+BiListUl
+BiPalette
 BiPalette2
-BiPencilSquare 
-BiPencil 
-BiPen 
-BiPeople 
-BiPostcardHeart 
-BiShop 
-BiSliders 
-BiSliders2 
-BiStickies 
-BiSticky 
-BiSubtract 
-BiTable 
-BiTextLeft 
-BiTools 
-BiTrash 
-BiTrash3 
-BiUiChecksGrid 
-BiUiChecks 
-BiWindowStack 
-BiWindow 
-BiXLg 
-BiCardChecklist 
-BiBoxArrowLeft 
+BiPencilSquare
+BiPencil
+BiPen
+BiPeople
+BiPostcardHeart
+BiShop
+BiSliders
+BiSliders2
+BiStickies
+BiSticky
+BiSubtract
+BiTable
+BiTextLeft
+BiTools
+BiTrash
+BiTrash3
+BiUiChecksGrid
+BiUiChecks
+BiWindowStack
+BiWindow
+BiXLg
+BiCardChecklist
+BiBoxArrowLeft
 
 
-  
+
 -->
