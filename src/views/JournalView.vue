@@ -56,6 +56,7 @@ import axios from 'axios';
         <td>{{ journal.title }}</td>
         <td>{{ journal.subtitle }}</td>
         <td v-shortText="{ text: journal.content, chars: 200 }">{{ journal.content }}</td>
+        <!-- v-html="journal.content" -->
         <td>{{ journal.tags }}</td>
         <td><img :src="journal.image" alt="Journal picture" /><a :href="journal.image">{{ journal.image }}</a></td>
         <td>{{ journal.created_at }}</td>
