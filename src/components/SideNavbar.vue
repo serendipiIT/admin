@@ -65,22 +65,23 @@
       </routerLink>
 
       <routerLink class="menyItems" :to="{ name: 'Pages' }">
-        <div>
-          <div>
+        <div class="flex sm:h-12">
+          <div class="sm:w-12 items-center">
             <v-icon name="bi-window-stack" fill="gray" scale="1.4" />
           </div>
-          <div>Pages</div>
+          <div class="invisible sm:visible sm:flex sm:w-full w-0">Pages</div>
         </div>
       </routerLink>
 
       <routerLink class="menyItems" :to="{ name: 'Journal' }">
-        <div>
-          <div>
-            <v-icon name="bi-postcard-heart" fill="gray" scale="1.4" />
+        <div class="flex sm:h-12">
+          <div class="sm:w-12 items-center">
+            <v-icon name="bi-pencil" fill="gray" scale="1.4" />
           </div>
-          <div>Journal</div>
+          <div class="invisible sm:visible sm:flex sm:w-full w-0">Journal</div>
         </div>
       </routerLink>
+
 
       <!--      <routerLink class="menyItems" :to="{ name: 'Icons' }">
         <div class="flex sm:h-12">

@@ -1,6 +1,13 @@
 <script>
+
+  import { QuillEditor } from '@vueup/vue-quill'
+  import '@vueup/vue-quill/dist/vue-quill.snow.css'
+
   export default {
 
+    components: {
+      QuillEditor
+    },
     data() {
       return {
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
@@ -55,9 +62,10 @@
 
           <div class="border-t pt-2 border-gray-200">
             <h3 for="content">Content</h3>
-            <div class="textFieldInput">
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="journal.content" />
+            <!-- <div class="textFieldInput">
               <textarea id="content" name="content" v-model="journal.content" style="height: 100%; min-height: 10rem; width: 40vw" />
-            </div>
+            </div> -->
           </div>
           <div>
             <h3 for="tags">#Tags</h3>
