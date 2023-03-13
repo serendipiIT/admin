@@ -1,13 +1,21 @@
 <script>
   import SideNavbar from './components/SideNavbar.vue'
+  import { useFilterModal } from './filterModal'
   export default {
+    setup() {
+      const filterModal = useFilterModal()
+
+      return {
+        closeFilterModal: filterModal.closeFilter,
+      }
+    },
     components: { SideNavbar },
   }
 </script>
 
 <template>
   <SideNavbar />
-  <main class="sm:ml-56 bg-gray-50 h-full p-8 bg-fixed">
+  <main @click="closeFilterModal" class="sm:ml-56 bg-gray-50 h-full p-8 bg-fixed">
     <RouterView />
   </main>
 </template>
@@ -104,6 +112,14 @@
     color: #fff;
     &:hover {
       background-color: #1e8449;
+    }
+  }
+
+  .blueW {
+    background-color: #3d22a0;
+    color: #fff;
+    &:hover {
+      background-color: #1c1763;
     }
   }
 
