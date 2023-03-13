@@ -3,11 +3,10 @@
     <table class="table table-auto w-full">
       <thead>
         <tr>
-          <th v-for="column in columns" @click="reverseProducts(column)" :key="column.id">
+          <th v-for="column in columns" @click="reverseProducts(column)" :key="column.id" />
           <td>
             {{ column }}
           </td>
-          </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-500">
