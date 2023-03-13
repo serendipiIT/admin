@@ -153,7 +153,7 @@
 
       hejsan() {
         if (document.querySelector('#imagewhopi') === null) {
-          return 'Hejsan!'
+          return this.product.image
         } else {
           return document.querySelector('#imagewhopi')
         }
