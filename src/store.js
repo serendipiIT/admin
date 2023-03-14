@@ -26,6 +26,19 @@ const actions = {
     commit('setOrderList', orders.data.data)
     return orders
   },
+  async getColumns({ commit }) {
+    const response = await fetch('http://SITsApi.us-east-1.elasticbeanstalk.com/products/columns')
+    const result = await response.json()
+    const columns = await result.data
+    for (let index = 0; index < columns.length; index++) {
+      const element = columns[index]
+      if (element.Field === 'category2') {
+        let test = element.Type
+        let categories = test.slice(4, -1).replaceAll("'", '').split(',')
+        commit('setCategories', categories)
+      }
+    }
+  },
 }
 
 const getters = {
@@ -86,6 +99,10 @@ const mutations = {
   setOrderList(state, orders) {
     state.orderList = orders
   },
+  setCategories(state, result) {
+    // console.log(result)
+    state.categories = result
+  },
 }
 
 const state = {
@@ -93,6 +110,7 @@ const state = {
   filters: {},
   productList: [],
   orderList: [],
+  categories: [],
 }
 
 const vuexLocal = new VuexPersistence({
