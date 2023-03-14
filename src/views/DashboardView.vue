@@ -9,6 +9,7 @@
     <div class="content grid grid-cols-2 gap-4">
       <div class="componentCard">
         <h2>Products</h2>
+        <PieChart />
       </div>
       <div class="componentCard">
         <h2>Orders</h2>
@@ -25,6 +26,7 @@
 </template>
 
 <script>
+import PieChart from '../components/PieChart.vue'
 import BarChart from '../components/BarChart.vue'
   export default {
     name: 'DashboardView',
@@ -56,7 +58,8 @@ import BarChart from '../components/BarChart.vue'
     }
   },
   components: {
-    BarChart
+    BarChart,
+    PieChart
   }
   }
 </script>
