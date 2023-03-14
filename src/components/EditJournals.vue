@@ -1,5 +1,4 @@
 <script>
-
   export default {
     data() {
       return {
@@ -27,7 +26,6 @@
 
   <input type="textfield" v-model="content" placeholder="content" />
 
-
   <input type="text" v-model="tags" placeholder="tag" />
 
   <input type="text" v-model="image" placeholder="image url" />
@@ -37,5 +35,4 @@
 
   <input type="number" v-model="id" placeholder="id" />
   <input type="submit" @click="delAxios" value="Remove product" />
-
 </template>
