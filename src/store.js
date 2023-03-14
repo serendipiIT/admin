@@ -83,6 +83,7 @@ const mutations = {
   },
   setProductList(state, products) {
     state.productList = products
+    state.filteredProductList = products
   },
   sort(state, key) {
     state.filteredProductList.sort(sortBy(key))
