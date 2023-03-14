@@ -8,6 +8,7 @@
   addIcons(PrSpinner, IoCloseOutline, IoReloadOutline)
 
   export default {
+    emits: ['hideLoading'],
     components: { Modal, vIcon: OhVueIcon, TransitionGroup },
     data() {
       return {
@@ -26,6 +27,12 @@
       // orders() {
       //   return this.$store.state.orderList
       // },
+    },
+    created() {
+      this.$store.dispatch('getOrders').then((res) => {
+        console.log(res)
+        this.$emit('hideLoading')
+      }) // Fetch orders
     },
     methods: {
       openModal(order) {
@@ -105,32 +112,7 @@
     </table>
   </div>
 
-  <Modal :show="isModalVisible" @close="closeModal">
-    <template #header>
-      <h2 class="text-2xl">Order Number: {{ orderModal.order_id }}</h2></template
-    >
-    <template #body>
-      <h3 class="mb-2 font-semibold">Customer Information:</h3>
-      <ul class="[&>*]:mb-2">
-        <li>Name: {{ orderModal.name }} {{ orderModal.surname }}</li>
-        <li>E-mail: {{ orderModal.email }}</li>
-        <li>Phone Number: {{ orderModal.phone }}</li>
-        <li>Address: {{ orderModal.street }}</li>
-        <li>City: {{ orderModal.city }}</li>
-        <li>ZIP Code: {{ orderModal.postal_code }}</li>
-        <li>Order placed at: {{ new Date(orderModal.created_at).toLocaleString('sv-SE', { timeZone: 'GMT' }) }}</li>
-        <li class="flex gap-12 mt-12">
-          <p class="self-center">Ordered Products:</p>
-          <div class="flex gap-12">
-            <li v-for="(products, index) in getProductsOnOrder(orderModal.order_id)" :key="index" class="flex flex-wrap flex-col items-center flex-1">
-              <img :src="products.image" :alt="products.title" class="h-[10rem] object-contain rounded-xl" />
-              <h3 class="text-center">{{ products.title }}</h3>
-            </li>
-          </div>
-        </li>
-      </ul>
-    </template>
-  </Modal>
+  <Modal :show="isModalVisible" @close="closeModal" :order="orderModal" />
 </template>
 
 <style>

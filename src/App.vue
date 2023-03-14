@@ -1,6 +1,10 @@
 <script>
   import SideNavbar from './components/SideNavbar.vue'
   import { useFilterModal } from './filterModal'
+
+  import Loading from 'vue-loading-overlay'
+  import 'vue-loading-overlay/dist/css/index.css'
+
   export default {
     setup() {
       const filterModal = useFilterModal()
@@ -9,9 +13,23 @@
         closeFilterModal: filterModal.closeFilter,
       }
     },
-    components: { SideNavbar },
-    created() {
-      this.$store.dispatch('getOrders') // Fetch orders
+    data() {
+      return {
+        isLoading: false,
+        fullPage: true,
+      }
+    },
+    components: { SideNavbar, Loading },
+    methods: {
+      showLoading() {
+        this.isLoading = true
+      },
+      onCancel() {
+        console.log('User cancelled the loader.')
+      },
+      hideLoading() {
+        this.isLoading = false
+      },
     },
   }
 </script>
@@ -19,11 +37,12 @@
 <template>
   <SideNavbar />
   <main class="sm:ml-56 bg-gray-50 min-h-[100vh] p-8 bg-fixed" @click="closeFilterModal">
-    <RouterView v-slot="{ Component, route }">
+    <RouterView @show-loading="showLoading" @hide-loading="hideLoading" v-slot="{ Component, route }">
       <Transition appear mode="out-in">
         <component :is="Component" :key="route.path" />
       </Transition>
     </RouterView>
+    <loading v-model:active="isLoading" :can-cancel="true" :on-cancel="onCancel" :is-full-page="fullPage" loader="bars" />
   </main>
 </template>
 
