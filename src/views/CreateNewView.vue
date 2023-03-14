@@ -29,7 +29,7 @@
           </div>
           <div class="border-t pt-2 border-gray-200">
             <h3 for="description">Description</h3>
-            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" />
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" toolbar="full" />
             <!--            <div class="textFieldInput">
               <textarea id="description" name="description" style="height: 100%; min-height: 10rem; width: 40vw" />
             </div>-->
@@ -39,9 +39,9 @@
         <div id="media" class="componentCard">
           <label for="image">Image</label>
           <div>
-            <img :src="product.image" alt="" width="200" />
+            <img :src="image" :alt="image" width="200" />
             <div>
-              <input type="file" id="image" name="image" accept="image/png, image/jpeg" />
+              <input type="file" id="image" name="image" accept="image/png, image/jpeg" @change="newImage" />
             </div>
           </div>
         </div>
@@ -179,6 +179,7 @@
         },
         checkedSizes: [],
         checkedColors: [],
+        image: null,
       }
     },
     computed: {
@@ -201,7 +202,7 @@
             price: parseInt(this.product.price),
             description: `'${this.product.description}'`,
             category2: `'${this.product.category2}'`,
-            image: `'${this.product.image}'`,
+            image: `'${this.image}'`,
             stock: parseInt(this.product.stock),
             active: parseInt(this.product.active),
             material: `'${this.product.material}'`,
@@ -217,6 +218,12 @@
       },
       toggleColor(color) {
         this.checkedColors = this.checkedColors.includes(color) ? this.checkedColors.filter((c) => c !== color) : [...this.checkedColors, color]
+      },
+
+      newImage(e) {
+        let files = e.target.files || e.dateTransfer.files
+        this.image = '/assets/img/' + files[0].name
+        console.log(this.image)
       },
     },
   }

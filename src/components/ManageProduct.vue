@@ -32,7 +32,7 @@
 
           <div class="border-t pt-2 border-gray-200">
             <h3 for="description">Description</h3>
-            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" />
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="product.description" toolbar="full" />
             <!--            <div class="textFieldInput">
               <textarea id="description" name="description" style="height: 100%; min-height: 10rem; width: 40vw" />
             </div>-->

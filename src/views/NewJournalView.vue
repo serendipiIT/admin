@@ -1,12 +1,10 @@
 <script>
-
   import { QuillEditor } from '@vueup/vue-quill'
   import '@vueup/vue-quill/dist/vue-quill.snow.css'
 
   export default {
-
     components: {
-      QuillEditor
+      QuillEditor,
     },
     data() {
       return {
@@ -17,7 +15,7 @@
           content: '',
           tags: '',
           image: null,
-        }
+        },
       }
     },
     created() {},
@@ -44,7 +42,7 @@
 
 <template>
   <div>
-<h1>New Journal</h1>
+    <h1>New Journal</h1>
     <form id="content">
       <div id="center">
         <div id="journalinfo" class="componentCard">
@@ -63,7 +61,7 @@
 
           <div class="border-t pt-2 border-gray-200">
             <h3 for="content">Content</h3>
-            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="journal.content" />
+            <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="journal.content" toolbar="full" />
             <!-- <div class="textFieldInput">
               <textarea id="content" name="content" v-model="journal.content" style="height: 100%; min-height: 10rem; width: 40vw" />
             </div> -->
@@ -85,7 +83,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </form>
     <div class="flex justify-end">
@@ -97,7 +94,7 @@
       </div>
     </div>
   </div>
-    </template>
+</template>
 
 <style lang="scss" scoped>
   #checkboxes {
