@@ -1,6 +1,8 @@
 <template>
   <Teleport to="#modal">
-    <FilterModal v-if="isFilterOpen" />
+    <KeepAlive>
+      <FilterModal v-if="isFilterOpen" />
+    </KeepAlive>
   </Teleport>
   <div class="componentTitle flex justify-between items-center">
     <h1>Products</h1>
@@ -22,13 +24,13 @@
             {{ column.toUpperCase() }}
             <template v-if="column != 'Image'">
               <v-icon v-if="column === activeSort && reverse" name="co-arrow-thick-top" scale=".8" />
-              <v-icon v-if="column === activeSort && !reverse" name="co-arrow-thick-bottom" scale=".8" />
+              <v-icon v-if="column === activeSort && reverse === false" name="co-arrow-thick-bottom" scale=".8" />
             </template>
           </th>
         </tr>
       </thead>
       <tbody class="divide-y divide-gray-500">
-        <TransitionGroup class="h-2 table-row" name="product-list" tag="tr" v-for="product in productPage(currentPage)(itemsPerPage)" :key="product.title">
+        <TransitionGroup class="h-2 table-row" name="product-list" tag="tr" v-for="product in productsOnCurrentPage" :key="product.id">
           <td :key="product.id + '1'">
             <img :src="product.image" style="max-width: 50px" />
           </td>
@@ -44,18 +46,21 @@
       </tbody>
     </table>
     <div class="mt-4 flex flex-row justify-between px-10">
-      <!-- <button :disabled="currentPage > 1 ? false : true" @click="$router.push(prevPage)">Previous</button> -->
       <div class="[&>*]:mr-1 [&>*]:inline w-full text-right">
-        <router-link v-if="!(currentPage - 1 === 1) && currentPage !== 1" :to="firstPage">1</router-link>
-        <router-link v-if="currentPage - 1 >= 1" :to="prevPage">{{ currentPage - 1 }}</router-link>
+        <router-link v-if="showFirstPageLink" :to="firstPage">1</router-link>
+        <p v-if="showFirstPageLink && currentPage + 1 < lastPageNumber">...</p>
+
+        <router-link v-if="showPrevPageLink" :to="prevPage">{{ currentPage - 1 }}</router-link>
+
         <p class="font-semibold">{{ currentPage }}</p>
-        <router-link v-if="currentPage + 1 < lastPageNumber(itemsPerPage)" :to="nextPage">{{ currentPage + 1 }}</router-link>
-        <p v-if="currentPage !== lastPageNumber(itemsPerPage)">
+
+        <router-link v-if="showNextPageLink" :to="nextPage">{{ currentPage + 1 }}</router-link>
+
+        <p v-if="showLastPageLink">
           ...
-          <router-link :to="lastPage">{{ lastPageNumber(itemsPerPage) }}</router-link>
+          <router-link :to="lastPage">{{ lastPageNumber }}</router-link>
         </p>
       </div>
-      <!-- <button :disabled="currentPage < lastPageNumber(itemsPerPage) ? false : true" @click="$router.push(nextPage)">Next</button> -->
     </div>
   </div>
 </template>
@@ -66,6 +71,7 @@
   import { CoArrowThickBottom, CoArrowThickTop } from 'oh-vue-icons/icons'
   addIcons(CoArrowThickBottom, CoArrowThickTop)
 
+  import { sortBy } from '../sortAndFilter'
   import { useFilterModal } from '../filterModal'
   import FilterModal from './FilterModal.vue'
 
@@ -77,6 +83,7 @@
         closeFilter: filterModal.closeFilter,
         isFilterOpen: filterModal.isOpen,
         openFilter: filterModal.openFilter,
+        sortBy,
       }
     },
     name: 'ProductOverview',
@@ -86,79 +93,108 @@
     },
     computed: {
       ...mapGetters({
-        productPage: 'getProductPage',
-        lastPageNumber: 'getLastPageNumber',
-        filteredProducts: 'getFilteredProductList',
+        filteredProductList: 'filteredProductList',
       }),
       firstPage() {
         return `/products?page=${1}&items=${this.itemsPerPage}`
       },
       lastPage() {
-        return `/products?page=${this.lastPageNumber(this.itemsPerPage)}&items=${this.itemsPerPage}`
+        return `/products?page=${this.lastPageNumber}&items=${this.itemsPerPage}`
+      },
+      lastPageNumber() {
+        return Math.ceil(this.filteredProductList.length / this.itemsPerPage)
       },
       nextPage() {
         return `/products?page=${this.currentPage + 1}&items=${this.itemsPerPage}`
       },
-      products() {
-        return this.$store.state.productList
-      },
       prevPage() {
         return `/products?page=${this.currentPage - 1}&items=${this.itemsPerPage}`
+      },
+      productsOnCurrentPage() {
+        const start = (this.currentPage - 1) * this.itemsPerPage
+        const end = this.currentPage * this.itemsPerPage
+        return this.filteredProductList.slice(start, end)
+      },
+      showFirstPageLink() {
+        return this.currentPage > 1
+      },
+      showLastPageLink() {
+        return this.currentPage < this.lastPageNumber
+      },
+      showNextPageLink() {
+        return this.currentPage + 1 < this.lastPageNumber
+      },
+      showPrevPageLink() {
+        return this.currentPage - 1 > 1
       },
     },
     created() {
       this.setPage()
     },
-    data: function () {
+    data() {
       return {
         activeSort: null,
         columns: ['Image', 'Id', 'Title', 'Category', 'Price', 'Stock', 'Active'],
-        currentPage: 1,
+        // filteredProductList: [],
         itemsPerPage: 10,
-        reverse: false,
-        /*products: this.$store.state.products,*/
-        // products: JSON.parse(localStorage.getItem('products')),
+        currentPage: 1,
+        reverse: null,
       }
     },
     methods: {
-      sort(sortBy) {
-        this.reverse = !this.reverse
-        if (sortBy !== this.activeSort) this.reverse = false
-        this.$store.commit(`sortBy${sortBy}`, this.reverse)
-        this.activeSort = sortBy
-      },
-      changeItemsPerPage(items = 'default') {
-        const itemsInView = this.currentPage * this.itemsPerPage
-        if (items === 'default') {
-          this.$router.push({
-            name: 'Products',
-            query: {
-              page: 1,
-              items: this.products.length,
-            },
-          })
-          return
-        }
-        const calculatedNewPage = Math.ceil(itemsInView / items)
+      changeItemsPerPage(items) {
+        const allProducts = this.filteredProductList.length
+
         this.$router.push({
           name: 'Products',
           query: {
-            page: calculatedNewPage,
-            items,
+            page: 1,
+            items: items || allProducts,
           },
         })
       },
       setPage() {
-        // Kanske att jag tänkt en gång för mycket. Det här kommer garanterat inte fungera om man går från att visa alla till att visa 10 per sida. Då vill man antagligen inte längre hamna på sista sidan.
-        const pageQuery = this.$route.query.page
-        const itemsPerPageQuery = this.$route.query.items
-        this.itemsPerPage = parseInt(itemsPerPageQuery) > this.products.length ? this.products.length : parseInt(itemsPerPageQuery) || 10
-        this.currentPage = parseInt(pageQuery <= this.lastPageNumber(this.itemsPerPage) || pageQuery < 1 ? pageQuery : 1) || 1
+        this.currentPage = parseInt(this.$route.query.page) || 1
+        this.itemsPerPage = parseInt(this.$route.query.items) || 10
+      },
+      sort(key, reload = false) {
+        let lowerCaseKey = `${key}`.toLowerCase()
+        if (lowerCaseKey === 'category') {
+          lowerCaseKey = 'category2'
+        }
+
+        if (reload) {
+          this.$store.commit('sort', lowerCaseKey)
+          if (this.reverse) this.$store.commit('reverse')
+          return
+        }
+
+        if (this.activeSort !== key || this.reverse === null) {
+          this.reverse = false
+        } else if (this.reverse === true) {
+          this.reverse = null
+        } else if (this.reverse !== null) {
+          this.reverse = !this.reverse
+        } else {
+          this.reverse = true
+        }
+
+        if (this.reverse === null) {
+          this.$store.commit('sort', 'id')
+        } else {
+          this.$store.commit('sort', lowerCaseKey)
+        }
+        if (this.reverse) this.$store.commit('reverse')
+
+        this.activeSort = key
       },
     },
     watch: {
       $route() {
         this.setPage()
+      },
+      filteredProductList() {
+        this.sort(this.activeSort, true)
       },
     },
   }
