@@ -2,7 +2,7 @@ import VuexPersistence from 'vuex-persist'
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-import { byId, byPrice, byStock, byTitle } from './sortAndFilter'
+import { byActive, byCategory, byId, byPrice, byStock, byTitle, filterProducts } from './sortAndFilter'
 
 const actions = {
   async getProducts({ commit }) {
@@ -12,8 +12,11 @@ const actions = {
       .map((product) => {
         return {
           ...product,
-          size: product.size.split(','),
           color: product.color.split(','),
+          id: Number(product.id),
+          price: Number(product.price),
+          size: product.size.split(','),
+          stock: Number(product.stock),
         }
       })
     commit('setProductList', productsFixedKeys)
@@ -26,13 +29,17 @@ const actions = {
 }
 
 const getters = {
-  getProductPage: (state) => (page) => {
-    const start = (page - 1) * 10
-    const end = page * 10
+  getFilteredProductList(state) {
+    return filterProducts(state.productList, state.filters)
+    // return
+  },
+  getProductPage: (state) => (page) => (items) => {
+    const start = (page - 1) * items
+    const end = page * items
     return state.productList.slice(start, end)
   },
-  getLastPageNumber(state) {
-    return Math.ceil(state.productList.length / 10)
+  getLastPageNumber: (state) => (items) => {
+    return Math.ceil(state.productList.length / items)
   },
   getOrderedProducts: (state) => (id) => {
     const productsOnOrder = state.orderList.filter((order) => order.order_id === id)
@@ -46,40 +53,30 @@ const getters = {
 }
 
 const mutations = {
+  setFilters(state, filters) {
+    state.filters = filters
+  },
   setProductList(state, products) {
     state.productList = products
   },
+  sortByActive(state, reverse = false) {
+    state.productList.sort(byActive)
+    if (reverse) state.productList.reverse()
+  },
+  sortByCategory(state, reverse = false) {
+    state.productList.sort(byCategory)
+    if (reverse) state.productList.reverse()
+  },
   sortById(state, reverse = false) {
-    state.productList = state.productList
-      .map((product) => {
-        return {
-          ...product,
-          id: Number(product.id),
-        }
-      })
-      .sort(byId)
+    state.productList.sort(byId)
     if (reverse) state.productList.reverse()
   },
   sortByPrice(state, reverse = false) {
-    state.productList = state.productList
-      .map((product) => {
-        return {
-          ...product,
-          price: Number(product.price),
-        }
-      })
-      .sort(byPrice)
+    state.productList.sort(byPrice)
     if (reverse) state.productList = state.productList.reverse()
   },
   sortByStock(state, reverse = false) {
-    state.productList = state.productList = state.productList
-      .map((product) => {
-        return {
-          ...product,
-          stock: Number(product.stock),
-        }
-      })
-      .sort(byStock)
+    state.productList = state.productList.sort(byStock)
     if (reverse) state.productList.reverse()
   },
   sortByTitle(state, reverse = false) {
@@ -92,6 +89,8 @@ const mutations = {
 }
 
 const state = {
+  filteredProductList: [],
+  filters: {},
   productList: [],
   orderList: [],
 }

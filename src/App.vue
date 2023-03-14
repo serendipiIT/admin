@@ -1,6 +1,14 @@
 <script>
   import SideNavbar from './components/SideNavbar.vue'
+  import { useFilterModal } from './filterModal'
   export default {
+    setup() {
+      const filterModal = useFilterModal()
+
+      return {
+        closeFilterModal: filterModal.closeFilter,
+      }
+    },
     components: { SideNavbar },
     created() {
       this.$store.dispatch('getOrders') // Fetch orders
@@ -10,7 +18,7 @@
 
 <template>
   <SideNavbar />
-  <main class="ml-56 bg-gray-50 min-h-[100vh] p-8 bg-fixed">
+  <main class="sm:ml-56 bg-gray-50 min-h-[100vh] p-8 bg-fixed" @click="closeFilterModal">
     <RouterView v-slot="{ Component, route }">
       <Transition appear mode="out-in">
         <component :is="Component" :key="route.path" />
@@ -111,6 +119,14 @@
     color: #fff;
     &:hover {
       background-color: #1e8449;
+    }
+  }
+
+  .blueW {
+    background-color: #3d22a0;
+    color: #fff;
+    &:hover {
+      background-color: #1c1763;
     }
   }
 
