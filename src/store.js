@@ -1,5 +1,6 @@
 import VuexPersistence from 'vuex-persist'
 import { createStore } from 'vuex'
+import axios from 'axios'
 
 import { byActive, byCategory, byId, byPrice, byStock, byTitle, filterProducts } from './sortAndFilter'
 
@@ -20,6 +21,11 @@ const actions = {
       })
     commit('setProductList', productsFixedKeys)
   },
+  async getOrders({ commit }) {
+    const orders = await axios.get('http://SITsApi.us-east-1.elasticbeanstalk.com/orders')
+    commit('setOrderList', orders.data.data)
+    return orders
+  },
 }
 
 const getters = {
@@ -34,6 +40,15 @@ const getters = {
   },
   getLastPageNumber: (state) => (items) => {
     return Math.ceil(state.productList.length / items)
+  },
+  getOrderedProducts: (state) => (id) => {
+    const productsOnOrder = state.orderList.filter((order) => order.order_id === id)
+    if (productsOnOrder.length > 0) return JSON.parse(productsOnOrder[0].products)
+    else return 'No order found.'
+  },
+  getSpecificOrder: (state) => (id) => {
+    const order = state.orderList.filter((order) => order.order_id === id)
+    return order.length > 0 ? order : null
   },
 }
 
@@ -68,12 +83,16 @@ const mutations = {
     state.productList = [...state.productList].sort(byTitle)
     if (reverse) state.productList.reverse()
   },
+  setOrderList(state, orders) {
+    state.orderList = orders
+  },
 }
 
 const state = {
   filteredProductList: [],
   filters: {},
   productList: [],
+  orderList: [],
 }
 
 const vuexLocal = new VuexPersistence({
