@@ -26,6 +26,12 @@ const actions = {
     commit('setOrderList', orders.data.data)
     return orders
   },
+
+  async getJournals ({ commit }) {
+    const journals = await axios.get('http://SITsApi.us-east-1.elasticbeanstalk.com/journal')
+    commit('setJournalList' , journals.data.data)
+    return journals
+  }
 }
 
 const getters = {
@@ -50,6 +56,11 @@ const getters = {
     const order = state.orderList.filter((order) => order.order_id === id)
     return order.length > 0 ? order : null
   },
+  getAllJournals: (state) => (id) => {
+    console.log("KÖRS")
+    const journal = state.journalList.filter((journal) => journal.id === id)
+    return journal.length > 0 ? journal[0]: ''
+  }
 }
 
 const mutations = {
@@ -86,6 +97,9 @@ const mutations = {
   setOrderList(state, orders) {
     state.orderList = orders
   },
+  setJournalList(state, journals) {
+    state.journalList = journals
+  }
 }
 
 const state = {
@@ -93,6 +107,7 @@ const state = {
   filters: {},
   productList: [],
   orderList: [],
+  journalList: [],
 }
 
 const vuexLocal = new VuexPersistence({

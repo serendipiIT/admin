@@ -1,39 +1,36 @@
 <script>
-import axios from 'axios';
+import { mapGetters } from 'vuex';
 
   export default {
     data(){
       return {
-        journal: this.$route.params.id
+        param: parseInt(this.$route.params.id),
       }
     },
-    mounted() {
-      this.fetchJournal();
-      console.log("Journals:", this.journal)
+    computed: {
+      ...mapGetters({
+        getJournal: 'getAllJournals'
+      }),
+      journal(){
+        return this.getJournal(this.param)
+      }
     },
-    methods: {
-
-      async fetchJournal() {
-        const response = await axios.get (`http://SITsApi.us-east-1.elasticbeanstalk.com/journal/${this.$route.params.id}`);
-        this.journals = response.data.data
-      },
-      async deleteJournal(journal) {
-        await axios.delete(`http://SITsApi.us-east-1.elasticbeanstalk.com/journal/${journal.id}`)
-        this.journals = this.journals.filter((j) => j.id !==journal.id)
-      },
-      // async editJournal(journal) {
-      //   console.log('edit Journal:', journal);
-      // },
-
-      // async newJournal(journal) {
-      //    console.log('new Journal:', journal);
-      // }
-    }
+    created () {
+      console.log(this.journal.title)
+      console.log(typeof(this.param))
+    },
+    watch: {
+      $route(){
+        this.param = parseInt(this.$route.params.id)
+      }
+    },
   }
 </script>
 <template>
+  <div>
   <h1>Edit Journal</h1>
-  <p>ID no: {{ journal }}</p>
+  <p>ID no: {{ param }}</p>
+</div>
 </template>
 
 <style></style>
