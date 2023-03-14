@@ -8,6 +8,27 @@
   }
 }
 
+@layer components {
+  .btn {
+    border-width: 1px;
+    text-align: center;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    cursor: pointer;
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity));
+    --tw-bg-opacity: 1;
+    background-color: rgb(38 38 38 / var(--tw-bg-opacity));
+  }
+  .btn:hover {
+    --tw-bg-opacity: 1;
+    background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+    --tw-text-opacity: 1;
+    color: rgb(0 0 0 / var(--tw-text-opacity));
+  }
+}
+
 h1 {
   font-size: 1.5rem;
 }
