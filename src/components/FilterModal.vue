@@ -1,31 +1,33 @@
 <template>
-  <section class="absolute top-0 right-0 h-screen w-full sm:w-[30rem]">
-    <h2>Filters</h2>
-    <form>
-      <label for="search">Search product</label>
-      <input id="search" placeholder="Blue shirt" type="text" v-model="searchTerm" />
-      <fieldset>
-        <legend>Categories</legend>
-        <input id="man" name="man" type="checkbox" value="man" v-model="categories" />
-        <label for="man">Man</label>
-        <input id="woman" name="woman" type="checkbox" value="woman" v-model="categories" />
-        <label for="woman">Woman</label>
-        <input id="accessories" name="accessories" type="checkbox" value="accessories" v-model="categories" />
-        <label for="accessories">Accessories</label>
-      </fieldset>
-      <fieldset>
-        <legend>Status</legend>
-        <label for="active">Active</label>
-        <input id="active" name="status" type="radio" value="active" v-model="status" />
-        <label for="inactive">Inactive</label>
-        <input id="inactive" name="status" type="radio" value="inactive" v-model="status" />
-      </fieldset>
-      <button @click.prevent="search">Search</button>
+  <transition
+    enter-from-class="translate-x-[100%] opacity-0"
+    leave-to-class="translate-x-[100%] opacity-0"
+    enter-active-class="transition duration-300"
+    leave-active-class="transition duration-300"
+  >
+    <form class="text-gray-800 absolute top-0 right-0 h-screen w-full sm:w-[30rem] bg-gray-100 z-50 py-16 px-8 sm:px-16">
+      <v-icon name="io-close-outline" scale="1.4" @click.prevent="closeFilter" class="absolute cursor-pointer top-16 right-8 sm:right-16" />
+      <h3 class="text-xl mb-4">Categories</h3>
+      <button class="mr-4" :class="categoryClass(category)" @click.prevent="setFilterCategories(category)" :key="category" v-for="category in categories">
+        {{ category }}
+      </button>
+      <h3 class="text-xl mb-4 mt-8">Status</h3>
+      <button class="mr-4" :class="statusClass(status.status)" @click.prevent="setFilterStatus(status.status)" :key="status.name" v-for="status in statusList">
+        {{ status.name }}
+      </button>
+      <div class="w-full flex flex-row">
+        <button class="btn hover:border-black block w-[50%] my-16" @click.prevent="reset">Reset</button>
+        <button class="btn bg-green-800 hover:border-black block w-[50%] my-16" @click.prevent="search">Search</button>
+      </div>
     </form>
-  </section>
+  </transition>
 </template>
 
 <script>
+  import { OhVueIcon, addIcons } from 'oh-vue-icons'
+  import { IoCloseOutline } from 'oh-vue-icons/icons'
+  addIcons(IoCloseOutline)
+
   import { useFilterModal } from '../filterModal'
   export default {
     setup() {
@@ -36,18 +38,59 @@
         isFilterOpen: filterModal.isOpen,
       }
     },
+    components: {
+      vIcon: OhVueIcon,
+    },
+    created() {
+      this.filterCategories = [...this.$store.state.filters.category]
+      this.filterStatus = this.$store.state.filters.active
+    },
     data() {
       return {
-        categories: [],
-        status: null,
+        filterCategories: [],
+        searchTerm: null,
+        filterStatus: null,
+        categories: ['Man', 'Woman', 'Accessories'],
+        statusList: [
+          { name: 'Active', status: true },
+          { name: 'Inactive', status: false },
+        ],
       }
     },
     methods: {
+      categoryClass(category) {
+        return this.filterCategories.includes(category) ? 'font-semibold' : 'font-normal'
+      },
+      reset() {
+        this.$store.commit('setFilters', { category: [], active: null })
+        this.filterCategories = []
+        this.filterStatus = null
+        this.closeFilter()
+      },
       search() {
-        this.$store.commit('setFilters', { category: this.categories, status: this.status })
+        const test = JSON.parse(JSON.stringify({ category: this.filterCategories, active: this.filterStatus }))
+        this.$store.commit('setFilters', test)
+        this.closeFilter()
+      },
+      setFilterCategories(category) {
+        if (this.filterCategories.includes(category)) {
+          this.filterCategories = this.filterCategories.filter((cat) => cat !== category)
+        } else {
+          this.filterCategories.push(category)
+        }
+      },
+      setFilterStatus(status) {
+        if (this.filterStatus === status) {
+          this.filterStatus = null
+        } else {
+          this.filterStatus = status
+        }
+      },
+      statusClass(status) {
+        return status === this.filterStatus ? 'font-semibold' : 'font-normal'
       },
     },
   }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

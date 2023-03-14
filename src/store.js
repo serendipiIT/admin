@@ -2,7 +2,7 @@ import VuexPersistence from 'vuex-persist'
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-import { byActive, byCategory, byId, byPrice, byStock, byTitle, filterProducts } from './sortAndFilter'
+import { filterProducts, sortBy } from './sortAndFilter'
 
 const actions = {
   async getProducts({ commit }) {
@@ -12,6 +12,7 @@ const actions = {
       .map((product) => {
         return {
           ...product,
+          active: product.active === 1 ? true : false,
           color: product.color.split(','),
           id: Number(product.id),
           price: Number(product.price),
@@ -42,17 +43,8 @@ const actions = {
 }
 
 const getters = {
-  getFilteredProductList(state) {
-    return filterProducts(state.productList, state.filters)
-    // return
-  },
-  getProductPage: (state) => (page) => (items) => {
-    const start = (page - 1) * items
-    const end = page * items
-    return state.productList.slice(start, end)
-  },
-  getLastPageNumber: (state) => (items) => {
-    return Math.ceil(state.productList.length / items)
+  filteredProductList(state) {
+    return state.filteredProductList
   },
   getOrderedProducts: (state) => (id) => {
     const productsOnOrder = state.orderList.filter((order) => order.order_id === id)
@@ -66,35 +58,22 @@ const getters = {
 }
 
 const mutations = {
+  removeAllFilters(state) {
+    state.filteredProductList = [...state.productList]
+  },
+  reverse(state) {
+    state.filteredProductList.reverse()
+  },
   setFilters(state, filters) {
     state.filters = filters
+
+    state.filteredProductList = filterProducts(state.productList, state.filters) || []
   },
   setProductList(state, products) {
     state.productList = products
   },
-  sortByActive(state, reverse = false) {
-    state.productList.sort(byActive)
-    if (reverse) state.productList.reverse()
-  },
-  sortByCategory(state, reverse = false) {
-    state.productList.sort(byCategory)
-    if (reverse) state.productList.reverse()
-  },
-  sortById(state, reverse = false) {
-    state.productList.sort(byId)
-    if (reverse) state.productList.reverse()
-  },
-  sortByPrice(state, reverse = false) {
-    state.productList.sort(byPrice)
-    if (reverse) state.productList = state.productList.reverse()
-  },
-  sortByStock(state, reverse = false) {
-    state.productList = state.productList.sort(byStock)
-    if (reverse) state.productList.reverse()
-  },
-  sortByTitle(state, reverse = false) {
-    state.productList = [...state.productList].sort(byTitle)
-    if (reverse) state.productList.reverse()
+  sort(state, key) {
+    state.filteredProductList.sort(sortBy(key))
   },
   setOrderList(state, orders) {
     state.orderList = orders
