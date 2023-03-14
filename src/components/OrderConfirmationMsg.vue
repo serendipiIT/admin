@@ -4,6 +4,13 @@
     <button @click="updateMsg">Uppdatera</button>
   </div>
   <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="content" toolbar="full" />
+  <div>
+    <h1>Thank you for your order!</h1>
+    <p>
+      <em style="color: rgb(68, 68, 68)">Your order has been placed and is being </em><em>processed</em
+      ><em style="color: rgb(68, 68, 68)">. We'll send a confitmation email to {{ email }} with your order details shortly.</em>
+    </p>
+  </div>
 </template>
 
 <script>
@@ -19,9 +26,10 @@
 
     data() {
       return {
-        /*urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',*/
-        urlApi: 'http://localhost:3000/',
+        urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
+        /*urlApi: 'http://localhost:3000/',*/
         content: null,
+        email: 'email@email.com',
       }
     },
 
