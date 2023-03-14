@@ -7,9 +7,12 @@ import OrdersView from './views/OrdersView.vue'
 import CustomersView from './views/CustomersView.vue'
 import DesignView from './views/DesignView.vue'
 import PagesView from './views/PagesView.vue'
+import JournalView from './views/JournalView.vue'
 import IconsView from './views/IconsView.vue'
 import EditProductView from './views/EditProductView.vue'
 import CreateNewView from './views/CreateNewView.vue'
+import NewJournalView from './views/NewJournalView.vue'
+import EditJournalsView from './views/EditJournalsView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -70,6 +73,26 @@ export default createRouter({
       component: PagesView,
       path: '/PagesView',
       meta: { title: 'Pages' },
+    },
+    {
+      name: 'EditJournal',
+      component: EditJournalsView,
+      path: '/EditJournalsView/:id',
+      meta: { title: 'EditJournal' },
+    },
+    {
+      name: 'Journal',
+      component: JournalView,
+      path: '/JournalView',
+      meta: { title: 'Journal' },
+    },
+    {
+      name: 'NewJournal',
+      component: NewJournalView,
+      path: '/NewJournalView',
+      meta: {
+        title: 'NewJournal',
+      },
     },
     {
       name: 'Icons',
