@@ -43,6 +43,7 @@
 </script>
 
 <template>
+  <div>
 <h1>New Journal</h1>
     <form id="content">
       <div id="center">
@@ -95,6 +96,7 @@
         <button class="button-68 greenW" role="button" @click="postJournal()">Add New Journal</button>
       </div>
     </div>
+  </div>
     </template>
 
 <style lang="scss" scoped>

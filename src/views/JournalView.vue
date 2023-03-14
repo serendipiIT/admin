@@ -22,7 +22,6 @@ import axios from 'axios';
         this.journals = this.journals.filter((j) => j.id !==journal.id)
       },
       async editJournal(journal) {
-        //routerlink till editsida???
         console.log('edit Journal:', journal);
       },
 
@@ -53,7 +52,7 @@ import axios from 'axios';
       </thead>
       <tbody class="divide-y divide-gray-500">
         <tr v-for="journal in journals" :key="journal.id">
-        <td>{{ journal.title }}</td>
+        <td><router-link v-shortText="{ text: journal.title, chars: 40 }" :to="`/EditJournalsView/${journal.id}`" /></td>
         <td>{{ journal.subtitle }}</td>
         <td v-shortText="{ text: journal.content, chars: 200 }">{{ journal.content }}</td>
         <!-- v-html="journal.content" -->

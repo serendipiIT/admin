@@ -12,6 +12,7 @@ import IconsView from './views/IconsView.vue'
 import EditProductView from './views/EditProductView.vue'
 import CreateNewView from './views/CreateNewView.vue'
 import NewJournalView from './views/NewJournalView.vue'
+import EditJournalsView from './views/EditJournalsView.vue'
 
 export default createRouter({
   history: createWebHashHistory(),
@@ -72,6 +73,12 @@ export default createRouter({
       component: PagesView,
       path: '/PagesView',
       meta: { title: 'Pages' },
+    },
+    {
+      name: 'EditJournal',
+      component: EditJournalsView,
+      path: '/EditJournalsView/:id',
+      meta: { title: 'EditJournal' },
     },
     {
       name: 'Journal',
