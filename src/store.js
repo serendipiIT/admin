@@ -102,7 +102,7 @@ const mutations = {
 
 const state = {
   filteredProductList: [],
-  filters: {},
+  filters: { category: [], active: null },
   productList: [],
   orderList: [],
   journalList: [],
