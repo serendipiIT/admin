@@ -103,11 +103,9 @@
             <div class="border-t pt-2 border-gray-200">
               <label for="category">Category</label>
               <div class="textFieldInput">
-                <select v-model="product.category">
-                  <option value="electronics">electronics</option>
-                  <option value="jewelery">jewelery</option>
-                  <option value="men's clothing">men's clothing</option>
-                  <option value="women's clothing">women's clothing</option>
+                <select v-model="product.category2">
+                  <option :value="null" selected disabled hidden>{{ null }}</option>
+                  <option v-for="category in categories" :key="category.id" :value="category">{{ category }}</option>
                 </select>
               </div>
             </div>
@@ -115,7 +113,7 @@
         </div>
       </div>
     </form>
-    {{ hejsan }}
+    {{ categories }}
     <div class="flex justify-between">
       <UpdateServer class="button-68" />
       <div>
@@ -147,8 +145,16 @@
     },
 
     computed: {
-      productList() {
-        return JSON.parse(localStorage.getItem('products'))
+      product() {
+        return {
+          ...this.$store.state.productList.find((element) => element.id === this.id),
+        }
+      },
+
+      categories() {
+        return {
+          ...this.$store.state.categories,
+        }
       },
 
       hejsan() {
@@ -166,9 +172,6 @@
     data() {
       return {
         id: parseInt(this.$route.params.id),
-        /*productList: JSON.parse(localStorage.getItem('products')),*/
-        /* productList: this.$store.state.products,*/
-        product: null,
         nextId: 1,
         prevId: null,
         active: false,
@@ -177,8 +180,8 @@
       }
     },
     created() {
-      this.product = this.$store.state.productList.find((element) => element.id === this.id)
-      this.nextId = this.product + 1
+      this.$store.dispatch('getColumns')
+      this.nextId = this.product + 1 //INDExOF
       this.prevId = this.product - 1
     },
     methods: {
@@ -190,7 +193,7 @@
             title: `${this.product.title}`,
             price: parseInt(this.product.price),
             description: `${this.product.description}`,
-            category: `${this.product.category}`,
+            category2: `${this.product.category2}`,
             image: `${this.product.image}`,
             stock: parseInt(this.product.stock),
             active: parseInt(this.product.active),

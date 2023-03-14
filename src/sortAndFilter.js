@@ -1,4 +1,4 @@
-function genericSort(key) {
+export function sortBy(key) {
   return function (productA, productB) {
     if (typeof productA[key] === 'string') {
       if (productA[key].toLowerCase() > productB[key].toLowerCase()) return 1
@@ -12,18 +12,15 @@ function genericSort(key) {
   }
 }
 
-export const byActive = genericSort('active')
-export const byCategory = genericSort('category2')
-export const byId = genericSort('id')
-export const byPrice = genericSort('price')
-export const byStock = genericSort('stock')
-export const byTitle = genericSort('title')
-
-export function filterProducts(productList, filters) {
-  let filteredList = JSON.parse(JSON.stringify(productList))
-  console.log('before: ', filteredList)
-  for (const [key, value] in Object.entries(filters)) {
-    filteredList = filteredList.filter((product) => product[key.toLowerCase()] === value)
+export function filterProducts(productList, { active, category }) {
+  // Båda alternativen!
+  let newArr = [...productList]
+  if (active !== null && typeof active === 'boolean') {
+    newArr = newArr.filter((product) => product.active === active)
   }
-  console.log('after: ', filteredList)
+
+  if (category.length > 0) {
+    newArr = newArr.filter((product) => category.some((cat) => cat.toLowerCase() === product.category2.toLowerCase()))
+  }
+  return newArr
 }

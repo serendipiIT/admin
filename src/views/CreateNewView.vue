@@ -101,9 +101,8 @@
               <label for="category">Category</label>
               <div class="textFieldInput">
                 <select v-model="product.category2">
-                  <option value="Man">Man</option>
-                  <option value="Woman">Woman</option>
-                  <option value="Accessories">Accessories</option>
+                  <option :value="null" selected disabled hidden>{{ null }}</option>
+                  <option v-for="category in categories" :key="category.id" :value="category">{{ category }}</option>
                 </select>
               </div>
             </div>
@@ -123,7 +122,6 @@
               <div class="border-t pt-2 border-gray-200">
                 <label for="size">Size</label>
                 <div id="checkboxes">
-                  <pre>{{ checkedSizes }}</pre>
                   <div v-for="size in sizes" :key="size">
                     <input v-model="checkedSizes" :id="size" type="checkbox" :value="size" />
                     <label :for="size">{{ size }}</label>
@@ -183,7 +181,16 @@
         checkedColors: [],
       }
     },
-    created() {},
+    computed: {
+      categories() {
+        return {
+          ...this.$store.state.categories,
+        }
+      },
+    },
+    created() {
+      this.$store.dispatch('getColumns')
+    },
     methods: {
       async postProduct() {
         const requestOptions = {

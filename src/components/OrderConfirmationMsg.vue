@@ -3,7 +3,7 @@
     <h2>Order Confirmation Message</h2>
     <button @click="updateMsg">Uppdatera</button>
   </div>
-  <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="content" />
+  <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="content" toolbar="full" />
 </template>
 
 <script>
@@ -19,7 +19,8 @@
 
     data() {
       return {
-        urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
+        /*urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',*/
+        urlApi: 'http://localhost:3000/',
         content: null,
       }
     },
@@ -39,6 +40,7 @@
         this.content = data.data.find((element) => element.id === 10).content
       },
       async updateMsg() {
+        console.log(this.content)
         const requestOptions = {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
