@@ -2,13 +2,20 @@
   import SideNavbar from './components/SideNavbar.vue'
   export default {
     components: { SideNavbar },
+    created() {
+      this.$store.dispatch('getOrders') // Fetch orders
+    },
   }
 </script>
 
 <template>
   <SideNavbar />
-  <main class="ml-56 bg-gray-50 h-full p-8 bg-fixed">
-    <RouterView />
+  <main class="ml-56 bg-gray-50 min-h-[100vh] p-8 bg-fixed">
+    <RouterView v-slot="{ Component, route }">
+      <Transition appear mode="out-in">
+        <component :is="Component" :key="route.path" />
+      </Transition>
+    </RouterView>
   </main>
 </template>
 
