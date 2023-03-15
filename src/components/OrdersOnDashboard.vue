@@ -11,8 +11,7 @@
     computed: {
       orders() {
         let vuex = this.$store.state.orderList
-        vuex = vuex.filter((order) => new Date(Date.parse(order.created_at)).toDateString() === new Date().toDateString()) //'Mar 14, 23'
-        return vuex.reverse().slice(0, 5)
+        return vuex.filter((order) => new Date(Date.parse(order.created_at)).toDateString() === new Date('Mar 14, 23').toDateString()) //'Mar 14, 23'
       },
     },
     methods: {
@@ -27,7 +26,7 @@
   }
 </script>
 <template>
-  <div class="componentCard">
+  <div class="componentCard h-[40vh] overflow-scroll">
     <h2>Today's Orders</h2>
     <ul v-if="orders.length > 0">
       <li v-for="order in orders" :key="order.id" class="border py-4 mt-2 first:border-t cursor-pointer flex hover:shadow transition-all rounded-lg">
@@ -37,7 +36,7 @@
         </p>
       </li>
     </ul>
-    <h3 v-else class="text-center mt-24">No orders placed today!</h3>
+    <h3 v-else class="text-center mt-36">No orders placed today!</h3>
   </div>
   <Modal :show="isModalVisible" @close="closeModal" :order="orderModal" />
 </template>

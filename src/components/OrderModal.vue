@@ -21,7 +21,7 @@
 <template>
   <Transition name="modal">
     <div v-if="show" class="z-50 fixed top-0 left-0 w-full h-full flex transition-opacity duration-300 ease-linear bg-[rgba(0,0,0,0.5)]">
-      <div class="min-w-[50%] m-auto p-12 bg-white border shadow-2xl transition-all duration-300 ease-linear rounded-3xl">
+      <div class="min-w-[30vw] max-w-[50%] m-auto p-12 bg-white border shadow-2xl transition-all duration-300 ease-linear rounded-3xl">
         <div class="flex items-center justify-between mb-2">
           <h2 class="text-2xl">Order Number: {{ order.order_id }}</h2>
           <button class="border py-2 px-6 rounded-full bg-gray-100 hover:bg-gray-800 hover:text-white transition-all" @click="$emit('close', false)">CLOSE</button>

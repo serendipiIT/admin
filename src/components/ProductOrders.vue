@@ -29,8 +29,7 @@
       // },
     },
     created() {
-      this.$store.dispatch('getOrders').then((res) => {
-        console.log(res)
+      this.$store.dispatch('getOrders').then(() => {
         this.$emit('hideLoading')
       }) // Fetch orders
     },
