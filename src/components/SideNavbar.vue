@@ -10,7 +10,7 @@
     <div class="flex flex-row sm:flex-col justify-around sm:justify-center focus-within:text-gray-600 sm:mb-8 w-screen sm:w-48">
       <routerLink class="menyItems" :to="{ name: 'home' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-columns-gap" fill="gray" scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:w-full w-0">Dashboard</div>
@@ -30,7 +30,7 @@
 
       <routerLink class="menyItems" :to="{ name: 'Products' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-postcard-heart" fill="gray" scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:flex sm:w-full w-0">Products</div>
@@ -39,7 +39,7 @@
 
       <routerLink class="menyItems" :to="{ name: 'Orders' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-cart-check" fill="gray" hover scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:flex sm:w-full w-0">Orders</div>
@@ -57,7 +57,7 @@
     -->
       <routerLink class="menyItems" :to="{ name: 'Design' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-palette" fill="gray" scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:flex sm:w-full w-0">Design</div>
@@ -66,7 +66,7 @@
 
       <routerLink class="menyItems" :to="{ name: 'Pages' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-window-stack" fill="gray" scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:flex sm:w-full w-0">Pages</div>
@@ -75,13 +75,12 @@
 
       <routerLink class="menyItems" :to="{ name: 'Journal' }">
         <div class="flex sm:h-12">
-          <div class="sm:w-12 items-center">
+          <div class="sm:w-12 items-center pl-2">
             <v-icon name="bi-pencil" fill="gray" scale="1.4" />
           </div>
           <div class="invisible sm:visible sm:flex sm:w-full w-0">Journal</div>
         </div>
       </routerLink>
-
 
       <!--      <routerLink class="menyItems" :to="{ name: 'Icons' }">
         <div class="flex sm:h-12">
