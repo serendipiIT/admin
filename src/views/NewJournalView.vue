@@ -34,7 +34,9 @@
         }
         const response = await fetch(`${this.urlApi}journal`, requestOptions)
         const data = await response.json()
+        this.$store.dispatch('getJournals')
         console.log(data)
+        this.$router.push('/JournalView')
       },
     },
   }
@@ -42,7 +44,9 @@
 
 <template>
   <div>
-    <h1>New Journal</h1>
+    <div class="componentTitle flex justify-between">
+      <h1>New Journal</h1>
+    </div>
     <form id="content">
       <div id="center">
         <div id="journalinfo" class="componentCard">
@@ -62,9 +66,6 @@
           <div class="border-t pt-2 border-gray-200">
             <h3 for="content">Content</h3>
             <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="journal.content" toolbar="full" />
-            <!-- <div class="textFieldInput">
-              <textarea id="content" name="content" v-model="journal.content" style="height: 100%; min-height: 10rem; width: 40vw" />
-            </div> -->
           </div>
           <div>
             <h3 for="tags">#Tags</h3>
@@ -85,7 +86,7 @@
         </div>
       </div>
     </form>
-    <div class="flex justify-end">
+    <div class="flex justify-start">
       <div class="mx-4">
         <router-link :to="`/JournalView/`"><button class="button-68 greenW" role="button">Back</button></router-link>
       </div>
