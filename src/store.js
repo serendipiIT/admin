@@ -28,9 +28,9 @@ const actions = {
     return orders
   },
 
-  async getJournals ({ commit }) {
+  async getJournals({ commit }) {
     const journals = await axios.get('http://SITsApi.us-east-1.elasticbeanstalk.com/journal')
-    commit('setJournalList' , journals.data.data)
+    commit('setJournalList', journals.data.data)
     return journals
   },
 
@@ -63,10 +63,10 @@ const getters = {
     return order.length > 0 ? order : null
   },
   getAllJournals: (state) => (id) => {
-    console.log("KÖRS")
+    console.log('KÖRS')
     const journal = state.journalList.filter((journal) => journal.id === id)
-    return journal.length > 0 ? journal[0]: ''
-  }
+    return journal.length > 0 ? journal[0] : ''
+  },
 }
 
 const mutations = {
