@@ -29,8 +29,9 @@
           </th>
         </tr>
       </thead>
-      <tbody class="divide-y divide-gray-500">
-        <TransitionGroup class="h-2 table-row" name="product-list" tag="tr" v-for="product in productsOnCurrentPage" :key="product.id">
+      <!-- <tbody class="divide-y divide-gray-500"> -->
+      <TransitionGroup class="divide-y divide-gray-500" name="product-list" tag="tbody">
+        <tr class="h-2 table-row" v-for="product in productsOnCurrentPage" :key="product.id">
           <td :key="product.id + '1'">
             <img :src="product.image" style="max-width: 50px" />
           </td>
@@ -42,24 +43,25 @@
           <td :key="product.id + '5'">{{ product.price }}</td>
           <td :key="product.id + '6'">{{ product.stock }}</td>
           <td :key="product.id + '7'"><span :class="`block  m-auto rounded-full p-2 w-2 h-2 ${product.active ? 'bg-green-800' : 'bg-red-700'}`" /></td>
-        </TransitionGroup>
-      </tbody>
+        </tr>
+      </TransitionGroup>
+      <!-- </tbody> -->
     </table>
     <table class="flex flex-col sm:hidden">
       <thead>
         <th>ID</th>
-        <th>TITLE</th>
+        <th class="text-center w-full">TITLE</th>
       </thead>
       <tbody>
         <tr class="p-2 border-b even:bg-gray-200" v-for="product in productsOnCurrentPage" :key="product.id">
-          <td>
-            <router-link v-shortText="{ text: product.title, chars: 17 }" :to="`/products/${product.id}`" />
-          </td>
+          <router-link :to="`/products/${product.id}`">
+            <td class="font-medium padding-important">
+              {{ product.id }}
+            </td>
+            <td class="w-full font-light" v-shortText="{ text: product.title, chars: 14 }" :title="product.title" />
+          </router-link>
         </tr>
       </tbody>
-      <!-- <li class="p-2 border-b even:bg-gray-200" v-for="product in productsOnCurrentPage" :key="product.id"> -->
-      <!-- <router-link v-shortText="{ text: product.title, chars: 17 }" :to="`/products/${product.id}`" /> -->
-      <!-- </li> -->
     </table>
     <div class="mt-4 hidden sm:flex flex-row justify-between px-10">
       <div class="[&>*]:mr-1 [&>*]:inline w-full text-right">
@@ -110,6 +112,7 @@
     computed: {
       ...mapGetters({
         filteredProductList: 'filteredProductList',
+        orders: 'getTodaysOrdersByCategory',
       }),
       firstPage() {
         return `/products?page=${1}&items=${this.itemsPerPage}`
@@ -129,7 +132,6 @@
       productsOnCurrentPage() {
         const start = (this.currentPage - 1) * this.itemsPerPage
         const end = this.currentPage * this.itemsPerPage
-        console.log(this.filteredProductList)
         return this.filteredProductList.slice(start, end)
       },
       showFirstPageLink() {
@@ -183,7 +185,6 @@
         return this.screenSize < 767
       },
       setPage() {
-        console.log('is mobile: ', this.isMobile())
         this.currentPage = this.isMobile() ? 1 : parseInt(this.$route.query.page) || 1
         this.itemsPerPage = this.isMobile() ? this.filteredProductList.length : parseInt(this.$route.query.items) || 10
       },
@@ -237,8 +238,15 @@
 
   th,
   td {
-    padding: 0.5rem 0;
-    text-align: center;
+    padding: 0.5rem 0.5rem;
+  }
+
+  @media (min-width: 678px) {
+    th,
+    td {
+      padding: 0.5rem 0;
+      text-align: center;
+    }
   }
 
   th:nth-of-type(3),

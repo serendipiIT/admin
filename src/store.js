@@ -7,19 +7,17 @@ import { filterProducts, sortBy } from './sortAndFilter'
 const actions = {
   async getProducts({ commit }) {
     const products = (await (await fetch('http://SITsApi.us-east-1.elasticbeanstalk.com/products')).json()).data
-    const productsFixedKeys = products
-      .filter((product) => product.color && product.size)
-      .map((product) => {
-        return {
-          ...product,
-          active: product.active === 1 ? true : false,
-          color: product.color.split(','),
-          id: Number(product.id),
-          price: Number(product.price),
-          size: product.size.split(','),
-          stock: Number(product.stock),
-        }
-      })
+    const productsFixedKeys = products.map((product) => {
+      return {
+        ...product,
+        active: product.active,
+        color: product.color?.split(',') || [],
+        id: Number(product.id),
+        price: Number(product.price),
+        size: product.size?.split(',') || [],
+        stock: Number(product.stock),
+      }
+    })
     commit('setProductList', productsFixedKeys)
   },
   async getOrders({ commit }) {
@@ -63,9 +61,11 @@ const getters = {
     return order.length > 0 ? order : null
   },
   getAllJournals: (state) => (id) => {
-    console.log('KÖRS')
     const journal = state.journalList.filter((journal) => journal.id === id)
     return journal.length > 0 ? journal[0] : ''
+  },
+  getTodaysOrdersByCategory(state) {
+    console.log(state.orderList)
   },
 }
 
@@ -96,7 +96,6 @@ const mutations = {
     state.journalList = journals
   },
   setCategories(state, result) {
-    // console.log(result)
     state.categories = result
   },
 }
