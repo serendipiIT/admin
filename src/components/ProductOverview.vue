@@ -4,27 +4,27 @@
       <FilterModal v-if="isFilterOpen" />
     </KeepAlive>
   </Teleport>
-  <div class="componentTitle flex justify-between items-center">
-    <h1>Products</h1>
-    <div class="flex-1 text-center">
-      <p class="mr-2 inline">Items per page:</p>
-      <button class="mr-2" @click="changeItemsPerPage(10)">10</button>
-      <button class="mr-2" @click="changeItemsPerPage(20)">20</button>
-      <button class="mr-2" @click="changeItemsPerPage(50)">50</button>
-      <button class="mr-2" @click="changeItemsPerPage()">All</button>
+  <div class="componentTitle flex flex-col sm:flex-row flex-wrap sm:justify-between items-center">
+    <h1 class="w-full sm:w-min text-center mb-4 sm:mb-0">Products</h1>
+    <div class="flex-1 text-center justify-center w-full hidden sm:block mb-8 sm:mb-0">
+      <p class="sm:mr-2 w-full">Items per page:</p>
+      <button class="inline w-min mr-2" @click="changeItemsPerPage(10)">10</button>
+      <button class="inline w-min mr-2" @click="changeItemsPerPage(20)">20</button>
+      <button class="inline w-min mr-2" @click="changeItemsPerPage(50)">50</button>
+      <button class="inline w-min mr-2" @click="changeItemsPerPage()">All</button>
     </div>
-    <button @click="openFilter" class="button-68 blueW mr-8">All Filters</button>
-    <router-link to="/create"><button class="button-68 greenW" role="button">Add Product</button></router-link>
+    <button @click="openFilter" class="button-68 blueW w-full sm:w-min mb-4 sm:mb-0 sm:mr-8">All Filters</button>
+    <router-link class="w-full sm:w-min" to="/create"><button class="button-68 w-full sm:w-min greenW" role="button">Add Product</button></router-link>
   </div>
   <div class="componentCard">
-    <table class="table table-auto w-full">
+    <table class="sm:table table-auto w-full hidden">
       <thead>
         <tr class="table-row">
-          <th v-for="column in columns" :key="column" @click="sort(column)" :class="column !== 'Image' && 'cursor-pointer'">
-            {{ column.toUpperCase() }}
-            <template v-if="column != 'Image'">
-              <v-icon v-if="column === activeSort && reverse" name="co-arrow-thick-top" scale=".8" />
-              <v-icon v-if="column === activeSort && reverse === false" name="co-arrow-thick-bottom" scale=".8" />
+          <th v-for="column in columns" :key="column.title" @click="sort(column.title)" :class="column.title !== 'Image' && 'cursor-pointer'">
+            {{ column.title.toUpperCase() }}
+            <template v-if="column.title != 'Image'">
+              <v-icon v-if="column.title === activeSort && reverse" name="co-arrow-thick-top" scale=".8" />
+              <v-icon v-if="column.title === activeSort && reverse === false" name="co-arrow-thick-bottom" scale=".8" />
             </template>
           </th>
         </tr>
@@ -45,7 +45,23 @@
         </TransitionGroup>
       </tbody>
     </table>
-    <div class="mt-4 flex flex-row justify-between px-10">
+    <table class="flex flex-col sm:hidden">
+      <thead>
+        <th>ID</th>
+        <th>TITLE</th>
+      </thead>
+      <tbody>
+        <tr class="p-2 border-b even:bg-gray-200" v-for="product in productsOnCurrentPage" :key="product.id">
+          <td>
+            <router-link v-shortText="{ text: product.title, chars: 17 }" :to="`/products/${product.id}`" />
+          </td>
+        </tr>
+      </tbody>
+      <!-- <li class="p-2 border-b even:bg-gray-200" v-for="product in productsOnCurrentPage" :key="product.id"> -->
+      <!-- <router-link v-shortText="{ text: product.title, chars: 17 }" :to="`/products/${product.id}`" /> -->
+      <!-- </li> -->
+    </table>
+    <div class="mt-4 hidden sm:flex flex-row justify-between px-10">
       <div class="[&>*]:mr-1 [&>*]:inline w-full text-right">
         <router-link v-if="showFirstPageLink" :to="firstPage">1</router-link>
         <p v-if="showFirstPageLink && currentPage + 1 < lastPageNumber">...</p>
@@ -113,6 +129,7 @@
       productsOnCurrentPage() {
         const start = (this.currentPage - 1) * this.itemsPerPage
         const end = this.currentPage * this.itemsPerPage
+        console.log(this.filteredProductList)
         return this.filteredProductList.slice(start, end)
       },
       showFirstPageLink() {
@@ -134,11 +151,20 @@
     data() {
       return {
         activeSort: null,
-        columns: ['Image', 'Id', 'Title', 'Category', 'Price', 'Stock', 'Active'],
+        columns: [
+          { title: 'Image', mobile: false },
+          { title: 'Id', mobile: true },
+          { title: 'Title', mobile: true },
+          { title: 'Category', mobile: false },
+          { title: 'Price', mobile: false },
+          { title: 'Stock', mobile: false },
+          { title: 'Active', mobile: false },
+        ],
         // filteredProductList: [],
-        itemsPerPage: 10,
+        itemsPerPage: this.isMobile() ? this.filteredProductList.length : 10,
         currentPage: 1,
         reverse: null,
+        screenSize: window.innerWidth,
       }
     },
     methods: {
@@ -153,9 +179,13 @@
           },
         })
       },
+      isMobile() {
+        return this.screenSize < 767
+      },
       setPage() {
-        this.currentPage = parseInt(this.$route.query.page) || 1
-        this.itemsPerPage = parseInt(this.$route.query.items) || 10
+        console.log('is mobile: ', this.isMobile())
+        this.currentPage = this.isMobile() ? 1 : parseInt(this.$route.query.page) || 1
+        this.itemsPerPage = this.isMobile() ? this.filteredProductList.length : parseInt(this.$route.query.items) || 10
       },
       sort(key, reload = false) {
         let lowerCaseKey = `${key}`.toLowerCase()

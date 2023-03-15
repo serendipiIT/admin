@@ -12,10 +12,10 @@
       <p class="self-end">id: {{ product.id }}</p>
 
       <div>
-        <RouterLink to="/products/2" class="btn-arrow button-68">
+        <RouterLink :to="`/products/${prevId}`" class="btn-arrow button-68">
           <v-icon name="bi-chevron-left" fill="gray" hover scale="1" />
         </RouterLink>
-        <RouterLink to="/products/3" class="btn-arrow button-68">
+        <RouterLink :to="`/products/${nextId}`" class="btn-arrow button-68">
           <v-icon name="bi-chevron-right" fill="gray" hover scale="1" />
         </RouterLink>
       </div>
@@ -167,22 +167,25 @@
       /*newImg: productList. document.querySelector('#image').files[0].name,*/
     },
 
-    whatch: {},
-
     data() {
       return {
         id: parseInt(this.$route.params.id),
-        nextId: 1,
+        nextId: null,
         prevId: null,
         active: false,
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
-        /*newImg: document.querySelector('#image').files[0].name,*/
       }
     },
     created() {
-      this.$store.dispatch('getColumns')
-      this.nextId = this.product + 1 //INDExOF
-      this.prevId = this.product - 1
+      this.product = this.$store.state.filteredProductList.find((element) => element.id === this.id)
+      const index = this.$store.state.filteredProductList.map((product) => product.id).indexOf(this.id)
+      const nextIndex = index < this.$store.state.filteredProductList.length - 1 ? index + 1 : 0
+      const prevIndex = index > 1 ? index - 1 : this.$store.state.filteredProductList.length - 1
+
+      this.nextId = this.$store.state.filteredProductList[nextIndex]?.id || this.id
+      this.prevId = this.$store.state.filteredProductList[prevIndex]?.id || this.id
+      console.log(this.prevId)
+      console.log(this.nextId)
     },
     methods: {
       async putProduct() {
