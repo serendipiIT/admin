@@ -1,27 +1,33 @@
 <template>
+  <OkMsg
+    class="absolute inset-x-0 top-0"
+    :class="{ hidden: isHidden }"
+    @click="this.isHidden = !this.isHidden"
+  />
   <div class="flex justify-between my-4">
     <h2>Order Confirmation Message</h2>
     <button @click="updateMsg">Uppdatera</button>
   </div>
-  <QuillEditor style="height: 100%; min-height: 10rem" theme="snow" content-type="html" v-model:content="content" toolbar="full" />
-  <div>
-    <h1>Thank you for your order!</h1>
-    <p>
-      <em style="color: rgb(68, 68, 68)">Your order has been placed and is being </em><em>processed</em
-      ><em style="color: rgb(68, 68, 68)">. We'll send a confitmation email to {{ email }} with your order details shortly.</em>
-    </p>
-  </div>
+  <QuillEditor
+    style="height: 100%; min-height: 10rem"
+    theme="snow"
+    content-type="html"
+    v-model:content="content"
+    toolbar="full"
+  />
 </template>
 
 <script>
   import { QuillEditor } from '@vueup/vue-quill'
   import '@vueup/vue-quill/dist/vue-quill.snow.css'
+  import OkMsg from './OkMsg.vue'
 
   export default {
     name: 'OrderConfirmationMsg',
 
     components: {
       QuillEditor,
+      OkMsg,
     },
 
     data() {
@@ -30,11 +36,22 @@
         /*urlApi: 'http://localhost:3000/',*/
         content: null,
         email: 'email@email.com',
+        isHidden: true,
       }
     },
 
     created() {
       this.getOrderDetails()
+    },
+
+    computed: {
+      newContent() {
+        if (this.content) {
+          return this.content.replace(/"/g, '\"') //eslint-disable-line
+        } else {
+          return null
+        }
+      },
     },
 
     methods: {
@@ -48,16 +65,22 @@
         this.content = data.data.find((element) => element.id === 10).content
       },
       async updateMsg() {
-        console.log(this.content)
+        console.log(this.newContent)
         const requestOptions = {
           method: 'PUT',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            content: `${this.content}`,
+            content: `${this.newContent}`,
           }),
         }
         const response = await fetch(`${this.urlApi}pages/10`, requestOptions)
-        console.log(response)
+        console.log(response.status)
+        if (response.status === 200) {
+          this.isHidden = false
+          setTimeout(() => {
+            this.isHidden = !this.isHidden
+          }, 50000)
+        }
       },
     },
   }

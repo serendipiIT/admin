@@ -1,5 +1,6 @@
 <template>
   <main>
+    <OkMsg class="sticky z-10 inset-x-0 top-0" :class="{ hidden: isHidden }" @click="this.isHidden = !this.isHidden" />
     <div id="top" class="items-baseline">
       <div>
         <RouterLink to="/products" class="btn-arrow button-68">
@@ -113,9 +114,7 @@
         </div>
       </div>
     </form>
-    {{ categories }}
     <div class="flex justify-between">
-      <UpdateServer class="button-68" />
       <div>
         <button class="button-68 redW mr-3" role="button" @click="delProduct()">Delete Product</button>
         <button class="button-68 greenW" role="button" @click="putProduct()">Save</button>
@@ -128,20 +127,21 @@
   import { QuillEditor } from '@vueup/vue-quill'
   import '@vueup/vue-quill/dist/vue-quill.snow.css'
   import axios from 'axios'
-  import UpdateServer from './UpdateServer.vue'
   import { OhVueIcon, addIcons } from 'oh-vue-icons'
   import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
   import { RouterLink } from 'vue-router'
   addIcons(BiChevronLeft, BiChevronRight)
+  import OkMsg from './OkMsg.vue'
 
   export default {
     name: 'ManageProduct',
 
     components: {
-      UpdateServer,
       'v-icon': OhVueIcon,
       RouterLink,
       QuillEditor,
+      OkMsg,
+
     },
 
     computed: {
@@ -172,8 +172,10 @@
         id: parseInt(this.$route.params.id),
         nextId: null,
         prevId: null,
-        active: false,
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
+        /*urlApi: 'http://localhost:3000/',*/
+        isHidden: true,
+
       }
     },
     created() {
@@ -199,10 +201,20 @@
             category2: `${this.product.category2}`,
             image: `${this.product.image}`,
             stock: parseInt(this.product.stock),
-            active: parseInt(this.product.active),
+            active: `${this.product.active}`,
+            material: `${this.product.material}`, 
+            size_guide: `${this.product.size_guide}`, 
+            info: `${this.product.info}`, 
+            color: `${this.product.color}`, 
+            size: `${this.product.size}`
           }),
         }
         const response = await fetch(`${this.urlApi}products/${this.product.id}`, requestOptions)
+        if(response.status === 200) {
+          this.isHidden = false
+          setTimeout(() => { this.isHidden = !this.isHidden}, 50000);
+        }
+        console.log(response.status)
         const data = await response.json()
         console.log(data)
       },

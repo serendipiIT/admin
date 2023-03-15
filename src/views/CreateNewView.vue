@@ -1,5 +1,6 @@
 <template>
   <main>
+    <OkMsg class="absolute inset-x-0 top-0" :class="{ hidden: isHidden }" @click="this.isHidden = !this.isHidden" />
     <div id="top" class="items-baseline">
       <div>
         <RouterLink to="/products" class="btn-arrow button-68">
@@ -148,7 +149,7 @@
   import { BiChevronLeft, BiChevronRight } from 'oh-vue-icons/icons'
   import { RouterLink } from 'vue-router'
   addIcons(BiChevronLeft, BiChevronRight)
-
+  import OkMsg from '../components/OkMsg.vue'
   export default {
     name: 'CreateNew',
 
@@ -156,10 +157,12 @@
       'v-icon': OhVueIcon,
       RouterLink,
       QuillEditor,
+      OkMsg,
     },
 
     data() {
       return {
+        isHidden: true,
         urlApi: 'http://SITsApi.us-east-1.elasticbeanstalk.com/',
         color: ['White', 'Gray', 'Black', 'Brown', 'Green', 'Red', 'Yellow', 'Blue'],
         sizes: ['XS', 'S', 'M', 'L', 'XL', '32', '34', '36', '38', '40', '42', '44', 'One Size'],
@@ -215,6 +218,11 @@
         const response = await fetch(`${this.urlApi}products`, requestOptions)
         const data = await response.json()
         console.log(data)
+        if(response.status === 200) {
+          this.isHidden = false
+          setTimeout(() => { this.isHidden = !this.isHidden}, 50000);
+
+        }
       },
       toggleColor(color) {
         this.checkedColors = this.checkedColors.includes(color) ? this.checkedColors.filter((c) => c !== color) : [...this.checkedColors, color]
