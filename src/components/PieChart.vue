@@ -17,7 +17,8 @@
 </script>
 
 <template>
-  <div>
+  <div class="componentCard h-[50vh]">
+    <h2>Products</h2>
     <Pie :data="data" :options="options" />
   </div>
 </template>

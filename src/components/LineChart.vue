@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="componentCard h-[50vh]">
+  <h2>Visitors</h2>
   <Line :data="data" :options="options" />
   </div>
 </template>

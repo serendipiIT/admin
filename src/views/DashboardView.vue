@@ -7,19 +7,10 @@
       <h2>Welcome!</h2>
     </div>
     <div class="content grid md:grid-cols-2 gap-4 grid-cols-1">
-      <div class="componentCard">
-        <h2>Products</h2>
-        <PieChart />
-      </div>
+      <PieChart />
       <OrdersBlock />
-      <div class="componentCard">
-        <h2>Visitors</h2>
-        <LineChart />
-      </div>
-      <div class="componentCard">
-        <h2>Sales</h2>
-        <BarChart />
-      </div>
+      <LineChart />
+      <BarChart />
     </div>
   </main>
 </template>
