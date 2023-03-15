@@ -17,7 +17,7 @@
       </div>
       <div class="componentCard">
         <h2>Sales</h2>
-        <BarChart :data="chartData" :options="chartOptions" />
+        <BarChart />
       </div>
     </div>
   </main>
@@ -30,29 +30,7 @@
 
   export default {
     name: 'DashboardView',
-    data() {
-      return {
-        chartData: {
-          labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-          datasets: [
-            {
-              label: 'Sales',
-              data: [12, 19, 3, 5, 2, 3, 12, 8, 15, 11, 19, 4],
-              backgroundColor: ['rgba(255, 99, 132, 0.2)'],
-              borderColor: ['rgba(255, 99, 132, 1)'],
-              borderWidth: 1,
-            },
-          ],
-        },
-        chartOptions: {
-          scales: {
-            y: {
-              beginAtZero: true,
-            },
-          },
-        },
-      }
-    },
+    
     components: {
       BarChart,
       PieChart,
