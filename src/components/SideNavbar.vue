@@ -1,6 +1,6 @@
 <template>
   <nav class="fixed flex justify-between text-gray-500 sm:py-16 sm:px-4 sm:flex-col sm:h-screen sm:w-56 sm:border-r-2 flex-row bottom-4 h-12 bg-white">
-    <div class="invisible w-0 sm:w-auto sm:visible text-center text-black">
+    <div class="invisible w-0 sm:w-auto sm:visible text-center text-black  cursor-pointer" @click="$router.push(`/`)">
       <img src="/assets/b-logo.png" alt="logo" class="w-24 m-auto mb-5" />
       <h1 class="text-lg inline-block align-middle">serendip</h1>
       <span class="text-3xl font-medium inline-block align-middle">IT</span>
