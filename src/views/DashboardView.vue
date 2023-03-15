@@ -6,14 +6,15 @@
     <div class="componentCard">
       <h2>Welcome!</h2>
     </div>
-    <div class="content grid grid-cols-2 gap-4">
+    <div class="content grid md:grid-cols-2 gap-4 grid-cols-1">
       <div class="componentCard">
         <h2>Products</h2>
         <PieChart />
       </div>
       <OrdersBlock />
       <div class="componentCard">
-        <h2>Marketing</h2>
+        <h2>Visitors</h2>
+        <LineChart />
       </div>
       <div class="componentCard">
         <h2>Sales</h2>
@@ -27,6 +28,7 @@
   import PieChart from '../components/PieChart.vue'
   import BarChart from '../components/BarChart.vue'
   import OrdersBlock from '../components/OrdersOnDashboard.vue'
+  import LineChart from '../components/LineChart.vue'
 
   export default {
     name: 'DashboardView',
@@ -35,6 +37,7 @@
       BarChart,
       PieChart,
       OrdersBlock,
+      LineChart
     },
   }
 </script>
