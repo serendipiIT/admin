@@ -33,7 +33,6 @@
     },
     created() {
       this.$store.dispatch('getJournals').then((res) => {
-        console.log(res)
         console.log(this.$store.state.journalList[0])
       })
     },

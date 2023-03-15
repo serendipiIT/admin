@@ -26,7 +26,7 @@
   }
 </script>
 <template>
-  <div class="componentCard h-[40vh] overflow-scroll">
+  <div class="componentCard h-[50vh] overflow-i-scroll">
     <h2>Today's Orders</h2>
     <ul v-if="orders.length > 0">
       <li v-for="order in orders" :key="order.id" class="border py-4 mt-2 first:border-t cursor-pointer flex hover:shadow transition-all rounded-lg">

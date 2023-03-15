@@ -1,5 +1,8 @@
 <template>
+  <div class="componentCard h-[50vh]">
+  <h2>Sales</h2>
   <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  </div>
 </template>
 
 <script>
