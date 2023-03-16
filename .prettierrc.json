@@ -3,5 +3,5 @@
   "singleQuote": true,
   "trailingComma": "all",
   "vueIndentScriptAndStyle": true,
-  "printWidth": 170
+  "printWidth": 80
 }
