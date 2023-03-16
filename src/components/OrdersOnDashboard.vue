@@ -11,7 +11,7 @@
     computed: {
       orders() {
         let vuex = this.$store.state.orderList
-        return vuex.filter((order) => new Date(Date.parse(order.created_at)).toDateString() === new Date('Mar 14, 23').toDateString()) //'Mar 14, 23'
+        return vuex.filter((order) => new Date(Date.parse(order.created_at)).toDateString() === new Date().toDateString()) //'Mar 14, 23'
       },
     },
     methods: {
@@ -29,8 +29,13 @@
   <div class="componentCard h-[50vh] overflow-i-scroll">
     <h2>Today's Orders</h2>
     <ul v-if="orders.length > 0">
-      <li v-for="order in orders" :key="order.id" class="border py-4 mt-2 first:border-t cursor-pointer flex hover:shadow transition-all rounded-lg">
-        <p @click="openModal(order)" class="px-4">
+      <li
+        v-for="order in orders"
+        :key="order.id"
+        class="border py-4 mt-2 first:border-t cursor-pointer flex hover:shadow transition-all rounded-lg"
+        @click="openModal(order)"
+      >
+        <p class="px-4">
           Order {{ order.order_id }} was placed at {{ new Date(order.created_at).toLocaleString('sv-SE', { timeZone: 'GMT' }).slice(11, 19) }} by {{ order.name }}
           {{ order.surname }}
         </p>
