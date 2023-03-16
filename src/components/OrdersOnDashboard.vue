@@ -14,6 +14,9 @@
         return vuex.filter((order) => new Date(Date.parse(order.created_at)).toDateString() === new Date().toDateString()) //'Mar 14, 23'
       },
     },
+    mounted(){
+      this.$store.dispatch('getOrders')
+    },
     methods: {
       openModal(order) {
         this.orderModal = order
