@@ -29,7 +29,7 @@
   }
 </script>
 <template>
-  <div class="componentCard h-[50vh] overflow-i-scroll">
+  <div class="componentCard h-[50vh] overflow-y-scroll">
     <h2>Today's Orders</h2>
     <ul v-if="orders.length > 0">
       <li

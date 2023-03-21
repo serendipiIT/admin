@@ -21,12 +21,8 @@
     },
     computed: {
       ...mapGetters({
-        getProductsOnOrder: 'getOrderedProducts',
         getSpecificOrder: 'getSpecificOrder',
       }),
-      // orders() {
-      //   return this.$store.state.orderList
-      // },
     },
     created() {
       this.$store.dispatch('getOrders').then(() => {
